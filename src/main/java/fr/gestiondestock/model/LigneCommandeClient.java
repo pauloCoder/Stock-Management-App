@@ -2,10 +2,7 @@ package fr.gestiondestock.model;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
+@Table(name = "ligne_commande_client")
 public class LigneCommandeClient extends AbstractEntity
 {
 	

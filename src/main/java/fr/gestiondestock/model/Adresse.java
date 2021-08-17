@@ -31,7 +31,7 @@ public class Adresse implements Serializable
 	@Column(name = "ville")
 	private String ville;
 	
-	@Column(name = "codePostal")
+	@Column(name = "code_postal")
 	private String codePostal;
 	
 	@Column(name = "pays")

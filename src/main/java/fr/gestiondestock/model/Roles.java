@@ -1,15 +1,8 @@
 package fr.gestiondestock.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
@@ -17,7 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class Role extends AbstractEntity
+@Table(name = "Roles")
+public class Roles extends AbstractEntity
 {
 
 	/***--------------------- Attribut(s) ---------------------***/
