@@ -1,22 +1,14 @@
 package fr.gestiondestock.dto;
 
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.gestiondestock.model.Client;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Builder
-@SuppressWarnings("unused")
 public class ClientDto
 {
 
@@ -42,7 +34,44 @@ public class ClientDto
 	private AdresseDto adresse;
 
 	// => Client <-> CommandeClient
+	@JsonIgnore
 	private List<CommandeClientDto> commandeClients;
+
+	public static ClientDto fromEntity(Client client) {
+
+		if (client == null) {
+			return null;
+		}
+
+		return ClientDto.builder()
+						.id(client.getId())
+						.nom(client.getNom())
+						.prenom(client.toString())
+						.photo(client.getPhoto())
+						.email(client.getEmail())
+						.telephone(client.getTelephone())
+						.adresse(AdresseDto.fromEntity(client.getAdresse()))
+						.build();
+	}
+
+	public static Client toEntity(ClientDto clientDto) {
+
+		if (clientDto == null) {
+			return null;
+		}
+
+		Client client = new Client();
+		client.setId(clientDto.getId());
+		client.setNom(clientDto.getNom());
+		client.setPrenom(clientDto.getPrenom());
+		client.setPhoto(clientDto.getPhoto());
+		client.setEmail(clientDto.getEmail());
+		client.setTelephone(clientDto.getTelephone());
+		client.setAdresse(AdresseDto.toEntity(clientDto.getAdresse()));
+
+		return client;
+
+	}
 
 
 }

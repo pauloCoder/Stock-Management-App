@@ -3,6 +3,7 @@ package fr.gestiondestock.dto;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+import fr.gestiondestock.model.MvtStock;
 import fr.gestiondestock.model.TypeMtvStock;
 import lombok.Builder;
 import lombok.Data;
@@ -29,5 +30,39 @@ public class MvtStockDto
 	
 	// => MvtStock <-> Article
 	private ArticleDto article;
-	
+
+	/***--------------------- Mapping ---------------------***/
+
+	public static MvtStockDto fromEntity(MvtStock mvtStock) {
+
+		if (mvtStock == null) {
+			return null;
+		}
+
+		return MvtStockDto.builder()
+						  .id(mvtStock.getId())
+						  .dateMvt(mvtStock.getDateMvt())
+						  .quantite(mvtStock.getQuantite())
+						  .typeMvt(mvtStock.getTypeMvt())
+						  .article(ArticleDto.fromEntity(mvtStock.getArticle()))
+						  .build();
+
+	}
+
+	public static MvtStock toEntity(MvtStockDto mvtStockDto) {
+
+		if (mvtStockDto == null) {
+			return null;
+		}
+
+		MvtStock mvtStock = new MvtStock();
+		mvtStock.setId(mvtStockDto.getId());
+		mvtStock.setDateMvt(mvtStockDto.getDateMvt());
+		mvtStock.setTypeMvt(mvtStockDto.getTypeMvt());
+		mvtStock.setArticle(ArticleDto.toEntity(mvtStockDto.getArticle()));
+
+		return mvtStock;
+
+	}
+
 }

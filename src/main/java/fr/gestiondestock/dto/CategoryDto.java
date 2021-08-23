@@ -1,20 +1,16 @@
 package fr.gestiondestock.dto;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import fr.gestiondestock.model.Article;
 import fr.gestiondestock.model.Category;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Builder
 @Data
-@SuppressWarnings("unused")
 public class CategoryDto {
-	
-	
+
 	/***--------------------- Attribut(s) ---------------------***/
 	
 	/* Attribut(s) primitif(s) */
@@ -26,20 +22,19 @@ public class CategoryDto {
 	private String designation;
 	
 	/* Attribut(s) classe(s) */
-	
+
 	// => Category <-> Article
 	@JsonIgnore
 	private List<ArticleDto> articles;
 	
 	/***--------------------- Mapping ---------------------***/
 	
-	public CategoryDto fromEntity(Category category)
-	{
+	public static CategoryDto fromEntity(Category category) {
 		if (category == null){
 			return null;
 			//TODO throw an exception
 		}
-		
+
 		return CategoryDto.builder()
 						  .id(category.getId())
 						  .codeCategorie(category.getCodeCategorie())
@@ -47,5 +42,19 @@ public class CategoryDto {
 						  .build();
 	}
 
+	public static Category toEntity(CategoryDto categoryDto) {
+
+		if (categoryDto == null) {
+			return null;
+		}
+
+		Category category = new Category();
+		category.setId(categoryDto.getId());
+		category.setCodeCategorie(categoryDto.getCodeCategorie());
+		category.setDesignation(categoryDto.getDesignation());
+
+		return category;
+
+	}
 
 }
