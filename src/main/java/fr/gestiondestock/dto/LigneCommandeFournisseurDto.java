@@ -1,12 +1,11 @@
 package fr.gestiondestock.dto;
 
-import java.math.BigDecimal;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fr.gestiondestock.model.LigneCommandeClient;
 import fr.gestiondestock.model.LigneCommandeFournisseur;
 import lombok.Builder;
 import lombok.Data;
+
+import java.math.BigDecimal;
 
 @Data
 @Builder
