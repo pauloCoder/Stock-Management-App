@@ -20,7 +20,9 @@ public class CategoryDto {
 	private String codeCategorie;
 	
 	private String designation;
-	
+
+	private Integer idEntreprise;
+
 	/* Attribut(s) classe(s) */
 
 	// => Category <-> Article
@@ -39,6 +41,7 @@ public class CategoryDto {
 						  .id(category.getId())
 						  .codeCategorie(category.getCodeCategorie())
 						  .designation(category.getDesignation())
+						  .idEntreprise(category.getIdEntreprise())
 						  .build();
 	}
 
@@ -52,6 +55,7 @@ public class CategoryDto {
 		category.setId(categoryDto.getId());
 		category.setCodeCategorie(categoryDto.getCodeCategorie());
 		category.setDesignation(categoryDto.getDesignation());
+		category.setIdEntreprise(categoryDto.getIdEntreprise());
 
 		return category;
 

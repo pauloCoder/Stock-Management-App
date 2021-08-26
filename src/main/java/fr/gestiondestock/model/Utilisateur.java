@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -60,6 +61,7 @@ public class Utilisateur extends AbstractEntity
 	private Entreprise entreprise;
 	
 	// => Utilisateur <-> Role
-	@OneToMany(mappedBy = "utilisateur")
+	@OneToMany(fetch = FetchType.EAGER , mappedBy = "utilisateur")
+	@JsonIgnore
 	private List<Roles> roles;
 }

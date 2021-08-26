@@ -1,11 +1,11 @@
 package fr.gestiondestock.dto;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.gestiondestock.model.Fournisseur;
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -27,6 +27,8 @@ public class FournisseurDto
 	private String email;
 	
 	private String telephone;
+
+	private Integer idEntreprise;
 	
 	/* Attribut(s) classe(s) */
 	
@@ -52,6 +54,7 @@ public class FournisseurDto
 							 .photo(fournisseur.getPhoto())
 							 .email(fournisseur.getEmail())
 							 .telephone(fournisseur.getTelephone())
+							 .idEntreprise(fournisseur.getIdEntreprise())
 							 .adresse(AdresseDto.fromEntity(fournisseur.getAdresse()))
 							 .build();
 	}
@@ -69,6 +72,7 @@ public class FournisseurDto
 		fournisseur.setPhoto(fournisseurDto.getPhoto());
 		fournisseur.setEmail(fournisseurDto.getEmail());
 		fournisseur.setTelephone(fournisseurDto.getTelephone());
+		fournisseur.setIdEntreprise(fournisseurDto.getIdEntreprise());
 		fournisseur.setAdresse(AdresseDto.toEntity(fournisseurDto.getAdresse()));
 
 		return fournisseur;

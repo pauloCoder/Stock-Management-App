@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 import fr.gestiondestock.model.MvtStock;
+import fr.gestiondestock.model.SourceMvtStock;
 import fr.gestiondestock.model.TypeMtvStock;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,10 @@ public class MvtStockDto
 	private BigDecimal quantite;
 	
 	private TypeMtvStock typeMvt;
+
+	private SourceMvtStock sourceMvt;
+
+	private Integer idEntreprise;
 	
 	/* Attribut(s) classe(s) */
 	
@@ -43,6 +48,8 @@ public class MvtStockDto
 						  .dateMvt(mvtStock.getDateMvt())
 						  .quantite(mvtStock.getQuantite())
 						  .typeMvt(mvtStock.getTypeMvt())
+						  .sourceMvt(mvtStock.getSourceMvt())
+						  .idEntreprise(mvtStock.getIdEntreprise())
 						  .article(ArticleDto.fromEntity(mvtStock.getArticle()))
 						  .build();
 
@@ -58,6 +65,8 @@ public class MvtStockDto
 		mvtStock.setId(mvtStockDto.getId());
 		mvtStock.setDateMvt(mvtStockDto.getDateMvt());
 		mvtStock.setTypeMvt(mvtStockDto.getTypeMvt());
+		mvtStock.setSourceMvt(mvtStockDto.getSourceMvt());
+		mvtStock.setIdEntreprise(mvtStockDto.getIdEntreprise());
 		mvtStock.setArticle(ArticleDto.toEntity(mvtStockDto.getArticle()));
 
 		return mvtStock;

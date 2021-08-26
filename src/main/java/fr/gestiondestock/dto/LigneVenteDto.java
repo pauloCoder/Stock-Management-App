@@ -20,7 +20,9 @@ public class LigneVenteDto
 	private BigDecimal quantite;
 	
 	private BigDecimal prixUnitaire;
-		
+
+	private Integer idEntreprise;
+
 	/* Attribut(s) classe(s) */
 	
 	// => LigneVente <-> Article
@@ -40,6 +42,7 @@ public class LigneVenteDto
 		return LigneVenteDto.builder()
 							.quantite(ligneVente.getQuantite())
 							.prixUnitaire(ligneVente.getPrixUnitaire())
+							.idEntreprise(ligneVente.getIdEntreprise())
 							.article(ArticleDto.fromEntity(ligneVente.getArticle()))
 							.vente(VentesDto.fromEntity(ligneVente.getVentes()))
 							.build();
@@ -55,6 +58,7 @@ public class LigneVenteDto
 		LigneVente ligneVente = new LigneVente();
 		ligneVente.setQuantite(ligneVenteDto.getQuantite());
 		ligneVente.setPrixUnitaire(ligneVenteDto.getPrixUnitaire());
+		ligneVente.setIdEntreprise(ligneVenteDto.getIdEntreprise());
 		ligneVente.setArticle(ArticleDto.toEntity(ligneVenteDto.getArticle()));
 		ligneVente.setVentes(VentesDto.toEntity(ligneVenteDto.getVente()));
 

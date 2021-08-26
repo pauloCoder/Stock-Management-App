@@ -27,7 +27,9 @@ public class ClientDto
 	private String email;
 	
 	private String telephone;
-	
+
+	private Integer idEntreprise;
+
 	/* Attribut(s) classe(s) */
 	
 	// => Client <-> Adresse
@@ -50,6 +52,7 @@ public class ClientDto
 						.photo(client.getPhoto())
 						.email(client.getEmail())
 						.telephone(client.getTelephone())
+						.idEntreprise(client.getIdEntreprise())
 						.adresse(AdresseDto.fromEntity(client.getAdresse()))
 						.build();
 	}
@@ -67,6 +70,7 @@ public class ClientDto
 		client.setPhoto(clientDto.getPhoto());
 		client.setEmail(clientDto.getEmail());
 		client.setTelephone(clientDto.getTelephone());
+		client.setIdEntreprise(clientDto.getIdEntreprise());
 		client.setAdresse(AdresseDto.toEntity(clientDto.getAdresse()));
 
 		return client;

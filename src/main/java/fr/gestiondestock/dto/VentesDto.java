@@ -24,7 +24,9 @@ public class VentesDto
 	private Instant dateVente;
 	
 	private String commentaire;
-	
+
+	private Integer idEntreprise;
+
 	/* Attribut(s) classe(s) */
 	
 	// => Vente <-> LigneVente
@@ -44,6 +46,7 @@ public class VentesDto
 						.codeVente(ventes.getCodeVente())
 						.dateVente(ventes.getDateVente())
 						.commentaire(ventes.getCommentaire())
+						.idEntreprise(ventes.getIdEntreprise())
 						.build();
 
 	}
@@ -59,6 +62,7 @@ public class VentesDto
 		ventes.setCodeVente(ventesDto.getCodeVente());
 		ventes.setDateVente(ventesDto.getDateVente());
 		ventes.setCommentaire(ventesDto.getCommentaire());
+		ventes.setIdEntreprise(ventesDto.getIdEntreprise());
 
 		return ventes;
 

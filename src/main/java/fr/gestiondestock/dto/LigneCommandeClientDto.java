@@ -20,7 +20,9 @@ public class LigneCommandeClientDto
 	private BigDecimal quantite;
 	
 	private BigDecimal prixUnitaire;
-	
+
+	private Integer idEntreprise;
+
 	/* Attribut(s) classe(s) */
 	
 	// => LigneCommandeClient <-> Article
@@ -41,7 +43,8 @@ public class LigneCommandeClientDto
 									 .id(ligneCommandeClient.getId())
 									 .quantite(ligneCommandeClient.getQuantite())
 									 .prixUnitaire(ligneCommandeClient.getPrixUnitaire())
-									 .article(ArticleDto.fromEntity(ligneCommandeClient.getArticle()))
+									 .idEntreprise(ligneCommandeClient.getIdEntreprise())
+							 		 .article(ArticleDto.fromEntity(ligneCommandeClient.getArticle()))
 									 .commandeClient(CommandeClientDto.fromEntity(ligneCommandeClient.getCommandeClient()))
 									 .build();
 	}
@@ -56,6 +59,7 @@ public class LigneCommandeClientDto
 		ligneCommandeClient.setId(ligneCommandeClientDto.getId());
 		ligneCommandeClient.setQuantite(ligneCommandeClientDto.getQuantite());
 		ligneCommandeClient.setPrixUnitaire(ligneCommandeClient.getPrixUnitaire());
+		ligneCommandeClient.setIdEntreprise(ligneCommandeClientDto.getIdEntreprise());
 		ligneCommandeClient.setArticle(ArticleDto.toEntity(ligneCommandeClientDto.getArticle()));
 		ligneCommandeClient.setCommandeClient(CommandeClientDto.toEntity(ligneCommandeClientDto.getCommandeClient()));
 

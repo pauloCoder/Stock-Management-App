@@ -41,6 +41,9 @@ public class Fournisseur extends AbstractEntity
 	
 	@Column(name = "telephone")
 	private String telephone;
+
+	@Column(name = "entreprise_id")
+	private Integer idEntreprise;
 	
 	/* Attribut(s) classe(s) */
 	

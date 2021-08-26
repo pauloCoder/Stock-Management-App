@@ -1,12 +1,9 @@
 package fr.gestiondestock.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,6 +44,9 @@ public class Article extends AbstractEntity
 	
  	@Column(name = "photo")
 	private String photo;
+
+	@Column(name = "entreprise_id")
+	private Integer idEntreprise;
 	
 	/* Attribut(s) classe(s) */
 	
@@ -54,5 +54,17 @@ public class Article extends AbstractEntity
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
+
+	@OneToMany(mappedBy = "article")
+	private List<LigneVente> ligneVentes;
+
+	@OneToMany(mappedBy = "article")
+	private List<LigneCommandeClient> ligneCommandeClients;
+
+	@OneToMany(mappedBy = "article")
+	private List<LigneCommandeFournisseur> ligneCommandeFournisseurs;
+
+	@OneToMany(mappedBy = "article")
+	private List<MvtStock> mvtStocks;
 	
 }
