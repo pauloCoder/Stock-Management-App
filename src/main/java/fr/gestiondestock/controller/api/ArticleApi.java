@@ -2,10 +2,7 @@ package fr.gestiondestock.controller.api;
 
 import fr.gestiondestock.dto.ArticleDto;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +22,6 @@ public interface ArticleApi {
     @GetMapping(value = APP_ROOT + "/articles" , produces = MediaType.APPLICATION_JSON_VALUE)
     List<ArticleDto> findAll();
 
-    @GetMapping(value = APP_ROOT + "/articles/delete/{idArticle}")
+    @DeleteMapping(value = APP_ROOT + "/articles/delete/{idArticle}")
     void delete(@PathVariable("idArticle") Integer id);
 }

@@ -37,7 +37,6 @@ public class CategoryServiceImpl implements CategoryService {
 
         List<String> errors = CategoryValidator.validate(categoryDto);
         if (!errors.isEmpty()) {
-
             log.error("Category is not valid {}",categoryDto);
             throw new EntityNotValidException( "La category n'est pas valide" , ErrorCodes.CATEGORY_NOT_VALID , errors);
         }
@@ -58,7 +57,7 @@ public class CategoryServiceImpl implements CategoryService {
         Optional<Category> category = categoryRepository.findById(id);
         return CategoryDto.fromEntity(
                 category.orElseThrow( () -> {
-                    log.error("Inexistant article for id {}",id);
+                    log.error("Inexistant category for id {}",id);
                     throw new EntityNotFoundException(String.format("Aucune category avec l'ID %s n'a ete trouvee dans la BDD",id) ,ErrorCodes.CATEGORY_NOT_FOUND);
                 } )
         );
@@ -83,9 +82,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDto> findAll() {
-        return categoryRepository.findAll().stream()
-                .map(CategoryDto::fromEntity)
-                .collect(Collectors.toList());
+        return categoryRepository.findAll()
+                                 .stream()
+                                 .map(CategoryDto::fromEntity)
+                                 .collect(Collectors.toList());
     }
 
     @Override
