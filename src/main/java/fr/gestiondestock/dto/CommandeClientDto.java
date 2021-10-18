@@ -31,7 +31,6 @@ public class CommandeClientDto
 	/* Attribut(s) classe(s) */
 	
 	// => CommandeClient <-> LigneCommandeClient
-	@JsonIgnore
 	private List<LigneCommandeClientDto> ligneCommandeClients;
 	
 	// => CommandeClient <-> Client

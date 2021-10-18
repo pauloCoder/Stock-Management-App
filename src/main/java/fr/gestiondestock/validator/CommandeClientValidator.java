@@ -1,6 +1,8 @@
 package fr.gestiondestock.validator;
 
+import fr.gestiondestock.dto.ClientDto;
 import fr.gestiondestock.dto.CommandeClientDto;
+import fr.gestiondestock.model.Client;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ public class CommandeClientValidator {
         if (commandeClientDto == null) {
             errors.add("Veuillez saisir le code de la commande");
             errors.add("Veuillez saisir la date de la commande");
-            errors.add("Veuillez saisir le client");
+            errors.addAll(ClientValidator.validate(null));
             return errors;
         }
 
@@ -28,7 +30,7 @@ public class CommandeClientValidator {
         }
 
         if (commandeClientDto.getClient() == null) {
-            errors.add("Veuillez saisir le client");
+            errors.addAll(ClientValidator.validate(null));
         }
 
         return errors;

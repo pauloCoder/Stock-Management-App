@@ -16,6 +16,7 @@ public class LigneCommandeClientValidator {
             errors.add("Veuillez saisir le prix unitaire de la ligne de la commande client");
             errors.add("Veuillez saisir l'article de la ligne de la commande client");
             errors.add("Veuillez saisir la commande liée à la ligne de la commande client");
+            errors.addAll(ArticleValidator.validate(null));
             return errors;
         }
 
@@ -28,7 +29,7 @@ public class LigneCommandeClientValidator {
         }
 
         if (ligneCommandeClientDto.getArticle() == null) {
-            errors.add("Veuillez saisir l'article de la ligne de la commande client");
+            errors.addAll(ArticleValidator.validate(null));
         }
 
         if (ligneCommandeClientDto.getCommandeClient() == null) {

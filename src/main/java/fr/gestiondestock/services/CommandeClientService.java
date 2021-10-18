@@ -10,7 +10,7 @@ public interface CommandeClientService {
 
     CommandeClientDto findById(Integer id);
 
-    CommandeClientDto findByCodeCommande(String codeCommande);
+    CommandeClientDto findByCode(String code);
 
     List<CommandeClientDto> findAll();
 
