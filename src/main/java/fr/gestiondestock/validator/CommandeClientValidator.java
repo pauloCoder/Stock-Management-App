@@ -17,7 +17,8 @@ public class CommandeClientValidator {
         if (commandeClientDto == null) {
             errors.add("Veuillez saisir le code de la commande");
             errors.add("Veuillez saisir la date de la commande");
-            errors.addAll(ClientValidator.validate(null));
+            errors.add("Veuillez renseigner l'état de la commande");
+            errors.add("Veuillez renseigner le client");
             return errors;
         }
 
@@ -29,8 +30,12 @@ public class CommandeClientValidator {
             errors.add("Veuillez saisir la date de la commande");
         }
 
-        if (commandeClientDto.getClient() == null) {
-            errors.addAll(ClientValidator.validate(null));
+        if (!StringUtils.hasLength(commandeClientDto.getEtatCommande().toString())) {
+            errors.add("Veuillez renseigner l'état de la commande");
+        }
+
+        if (commandeClientDto.getClient() == null || commandeClientDto.getClient().getId() == null) {
+            errors.add("Veuillez reseigner le client");
         }
 
         return errors;

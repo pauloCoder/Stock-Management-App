@@ -1,6 +1,5 @@
 package fr.gestiondestock.validator;
 
-import fr.gestiondestock.dto.CommandeClientDto;
 import fr.gestiondestock.dto.CommandeFournisseurDto;
 import org.springframework.util.StringUtils;
 
@@ -16,6 +15,7 @@ public class CommandeFournisseurValidator {
         if (commandeFournisseurDto == null) {
             errors.add("Veuillez saisir le code de la commande");
             errors.add("Veuillez saisir la date de la commande");
+            errors.add("Veuillez saisir l'état de la commande");
             errors.add("Veuillez saisir le fournisseur");
             return errors;
         }
@@ -28,7 +28,11 @@ public class CommandeFournisseurValidator {
             errors.add("Veuillez saisir la date de la commande");
         }
 
-        if (commandeFournisseurDto.getFournisseur() == null) {
+        if (StringUtils.hasLength(commandeFournisseurDto.getEtatCommande().toString())) {
+            errors.add("Veuillez saisir l'état de la commande");
+        }
+
+        if (commandeFournisseurDto.getFournisseur() == null || commandeFournisseurDto.getFournisseur().getId() == null) {
             errors.add("Veuillez saisir le fournisseur");
         }
 

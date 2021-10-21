@@ -35,7 +35,7 @@ public class CommandeFournisseurDto
 	private FournisseurDto fournisseur;
 	
 	// => CommandeFournisseur <-> LigneCommandeFournisseur
-	private List<LigneCommandeClientDto> ligneCommandeFournisseurs;
+	private List<LigneCommandeFournisseurDto> ligneCommandeFournisseurs;
 
 	/***--------------------- Mapping ---------------------***/
 
