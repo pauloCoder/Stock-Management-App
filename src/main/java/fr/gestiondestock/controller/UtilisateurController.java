@@ -4,6 +4,7 @@ import fr.gestiondestock.controller.api.UtilisateurApi;
 import fr.gestiondestock.dto.UtilisateurDto;
 import fr.gestiondestock.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,22 +20,23 @@ public class UtilisateurController implements UtilisateurApi {
     }
 
     @Override
-    public UtilisateurDto save(UtilisateurDto utilisateurDto) {
-        return utilisateurService.save(utilisateurDto);
+    public ResponseEntity<UtilisateurDto> save(UtilisateurDto utilisateurDto) {
+        return ResponseEntity.ok(utilisateurService.save(utilisateurDto));
     }
 
     @Override
-    public UtilisateurDto findById(Integer id) {
-        return utilisateurService.findById(id);
+    public ResponseEntity<UtilisateurDto> findById(Integer id) {
+        return ResponseEntity.ok(utilisateurService.findById(id));
     }
 
     @Override
-    public List<UtilisateurDto> findAll() {
-        return utilisateurService.findAll();
+    public ResponseEntity<List<UtilisateurDto>> findAll() {
+        return ResponseEntity.ok(utilisateurService.findAll());
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public ResponseEntity deleteById(Integer id) {
         deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

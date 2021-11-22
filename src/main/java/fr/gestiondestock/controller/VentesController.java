@@ -4,6 +4,7 @@ import fr.gestiondestock.controller.api.VentesApi;
 import fr.gestiondestock.dto.VentesDto;
 import fr.gestiondestock.services.VentesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,27 +20,28 @@ public class VentesController implements VentesApi {
     }
 
     @Override
-    public VentesDto save(VentesDto ventesDto) {
-        return ventesService.save(ventesDto);
+    public ResponseEntity<VentesDto> save(VentesDto ventesDto) {
+        return ResponseEntity.ok(ventesService.save(ventesDto));
     }
 
     @Override
-    public VentesDto findById(Integer id) {
-        return ventesService.findById(id);
+    public ResponseEntity<VentesDto> findById(Integer id) {
+        return ResponseEntity.ok(ventesService.findById(id));
     }
 
     @Override
-    public VentesDto findByCode(String code) {
-        return ventesService.findByCode(code);
+    public ResponseEntity<VentesDto> findByCode(String code) {
+        return ResponseEntity.ok(ventesService.findByCode(code));
     }
 
     @Override
-    public List<VentesDto> findAll() {
-        return ventesService.findAll();
+    public ResponseEntity<List<VentesDto>> findAll() {
+        return ResponseEntity.ok(ventesService.findAll());
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public ResponseEntity deleteById(Integer id) {
         ventesService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

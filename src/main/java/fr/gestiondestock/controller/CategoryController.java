@@ -4,6 +4,7 @@ import fr.gestiondestock.controller.api.CategoryApi;
 import fr.gestiondestock.dto.CategoryDto;
 import fr.gestiondestock.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,27 +20,28 @@ public class CategoryController implements CategoryApi {
     }
 
     @Override
-    public CategoryDto save(CategoryDto categoryDto) {
-        return categoryService.save(categoryDto);
+    public ResponseEntity<CategoryDto> save(CategoryDto categoryDto) {
+        return ResponseEntity.ok(categoryService.save(categoryDto));
     }
 
     @Override
-    public CategoryDto findById(Integer id) {
-        return categoryService.findById(id);
+    public ResponseEntity<CategoryDto> findById(Integer id) {
+        return ResponseEntity.ok(categoryService.findById(id));
     }
 
     @Override
-    public CategoryDto findByCode(String codeCategory) {
-        return categoryService.findByCodeCategory(codeCategory);
+    public ResponseEntity<CategoryDto> findByCode(String codeCategory) {
+        return ResponseEntity.ok(categoryService.findByCodeCategory(codeCategory));
     }
 
     @Override
-    public List<CategoryDto> findAll() {
-        return categoryService.findAll();
+    public ResponseEntity<List<CategoryDto>> findAll() {
+        return ResponseEntity.ok(categoryService.findAll());
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public ResponseEntity deleteById(Integer id) {
         categoryService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

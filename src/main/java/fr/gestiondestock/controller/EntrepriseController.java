@@ -4,6 +4,7 @@ import fr.gestiondestock.controller.api.EntrepriseApi;
 import fr.gestiondestock.dto.EntrepriseDto;
 import fr.gestiondestock.services.EntrepriseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,22 +20,23 @@ public class EntrepriseController implements EntrepriseApi {
     }
 
     @Override
-    public EntrepriseDto save(EntrepriseDto entrepriseDto) {
-        return entrepriseService.save(entrepriseDto);
+    public ResponseEntity<EntrepriseDto> save(EntrepriseDto entrepriseDto) {
+        return ResponseEntity.ok(entrepriseService.save(entrepriseDto));
     }
 
     @Override
-    public EntrepriseDto findById(Integer id) {
-        return entrepriseService.findById(id);
+    public ResponseEntity<EntrepriseDto> findById(Integer id) {
+        return ResponseEntity.ok(entrepriseService.findById(id));
     }
 
     @Override
-    public List<EntrepriseDto> findAll() {
-        return entrepriseService.findAll();
+    public ResponseEntity<List<EntrepriseDto>> findAll() {
+        return ResponseEntity.ok(entrepriseService.findAll());
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public ResponseEntity deleteById(Integer id) {
         entrepriseService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

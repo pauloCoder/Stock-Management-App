@@ -4,9 +4,10 @@ import fr.gestiondestock.controller.api.ArticleApi;
 import fr.gestiondestock.dto.ArticleDto;
 import fr.gestiondestock.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List; 
+import java.util.List;
 
 @RestController
 public class ArticleController implements ArticleApi {
@@ -19,27 +20,29 @@ public class ArticleController implements ArticleApi {
     }
 
     @Override
-    public ArticleDto save(ArticleDto articleDto) {
-       return articleService.save(articleDto);
+    public ResponseEntity<ArticleDto> save(ArticleDto articleDto) {
+        return ResponseEntity.ok(articleService.save(articleDto));
     }
 
     @Override
-    public ArticleDto findById(Integer id) {
-        return articleService.findById(id);
+    public ResponseEntity<ArticleDto> findById(Integer id) {
+
+        return ResponseEntity.ok(articleService.findById(id));
     }
 
     @Override
-    public ArticleDto findByCodeArticle(String codeArticle) {
-        return articleService.findByCodeArticle(codeArticle);
+    public ResponseEntity<ArticleDto> findByCodeArticle(String codeArticle) {
+        return ResponseEntity.ok(articleService.findByCodeArticle(codeArticle));
     }
 
     @Override
-    public List<ArticleDto> findAll() {
-        return articleService.findAll();
+    public ResponseEntity<List<ArticleDto>> findAll() {
+        return ResponseEntity.ok(articleService.findAll());
     }
 
     @Override
-    public void delete(Integer id) {
+    public ResponseEntity delete(Integer id) {
         articleService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

@@ -4,6 +4,7 @@ import fr.gestiondestock.controller.api.FournisseurApi;
 import fr.gestiondestock.dto.FournisseurDto;
 import fr.gestiondestock.services.FournisseurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,22 +20,23 @@ public class FournisseurController implements FournisseurApi {
     }
 
     @Override
-    public FournisseurDto save(FournisseurDto fournisseurDto) {
-        return fournisseurService.save(fournisseurDto);
+    public ResponseEntity<FournisseurDto> save(FournisseurDto fournisseurDto) {
+        return ResponseEntity.ok(fournisseurService.save(fournisseurDto));
     }
 
     @Override
-    public FournisseurDto findById(Integer id) {
-        return fournisseurService.findById(id);
+    public ResponseEntity<FournisseurDto> findById(Integer id) {
+        return ResponseEntity.ok(fournisseurService.findById(id));
     }
 
     @Override
-    public List<FournisseurDto> findAll() {
-        return fournisseurService.findAll();
+    public ResponseEntity<List<FournisseurDto>> findAll() {
+        return ResponseEntity.ok(fournisseurService.findAll());
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public ResponseEntity deleteById(Integer id) {
         fournisseurService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

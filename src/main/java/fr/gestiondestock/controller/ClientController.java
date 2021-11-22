@@ -4,6 +4,7 @@ import fr.gestiondestock.controller.api.ClientApi;
 import fr.gestiondestock.dto.ClientDto;
 import fr.gestiondestock.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,22 +20,23 @@ public class ClientController implements ClientApi {
     }
 
     @Override
-    public ClientDto save(ClientDto clientDto) {
-        return clientService.save(clientDto);
+    public ResponseEntity<ClientDto> save(ClientDto clientDto) {
+        return  ResponseEntity.ok(clientService.save(clientDto));
     }
 
     @Override
-    public ClientDto findById(Integer id) {
-        return clientService.findById(id);
+    public ResponseEntity<ClientDto> findById(Integer id) {
+        return ResponseEntity.ok(clientService.findById(id));
     }
 
     @Override
-    public List<ClientDto> findAll() {
-        return clientService.findAll();
+    public ResponseEntity<List<ClientDto>> findAll() {
+        return ResponseEntity.ok(clientService.findAll());
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public ResponseEntity deleteById(Integer id) {
         clientService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }
