@@ -9,16 +9,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Data;
-
-@Data
+@Getter
+@Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractEntity implements Serializable
@@ -33,7 +33,7 @@ public abstract class AbstractEntity implements Serializable
 	private Integer id;
 	
 	@CreatedDate
-	@Column(name = "creationDate")
+	@Column(name = "creationDate" , nullable = false , updatable = false)
 	@JsonIgnore
 	private Instant creationDate;
 	

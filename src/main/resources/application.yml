@@ -8,6 +8,10 @@ spring:
   jpa:
     database: MYSQL
     show-sql: false
+    properties:
+      hibernate:
+        ejb:
+          interceptor: fr.gestiondestock.interceptor.Interceptor
 
     # Hibernate DDL Auto (create, create-drop, update)
     hibernate:
