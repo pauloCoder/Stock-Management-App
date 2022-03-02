@@ -11,7 +11,7 @@ spring:
     properties:
       hibernate:
         ejb:
-          interceptor: fr.gestiondestock.interceptor.Interceptor
+          #interceptor: fr.gestiondestock.interceptor.Interceptor
 
     # Hibernate DDL Auto (create, create-drop, update)
     hibernate:

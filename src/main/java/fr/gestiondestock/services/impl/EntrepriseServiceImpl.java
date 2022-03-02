@@ -1,30 +1,44 @@
 package fr.gestiondestock.services.impl;
 
 import fr.gestiondestock.dto.EntrepriseDto;
+import fr.gestiondestock.dto.RolesDto;
+import fr.gestiondestock.dto.UtilisateurDto;
 import fr.gestiondestock.exception.EntityNotFoundException;
 import fr.gestiondestock.exception.EntityNotValidException;
 import fr.gestiondestock.exception.ErrorCodes;
 import fr.gestiondestock.model.Entreprise;
 import fr.gestiondestock.repository.EntrepriseRepository;
+import fr.gestiondestock.repository.RolesRepository;
 import fr.gestiondestock.services.EntrepriseService;
+import fr.gestiondestock.services.UtilisateurService;
 import fr.gestiondestock.validator.EntrepriseValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Transactional(rollbackOn = Exception.class)
 @Service
 @Slf4j
 public class EntrepriseServiceImpl implements EntrepriseService {
 
-    private EntrepriseRepository entrepriseRepository;
+    private final EntrepriseRepository entrepriseRepository;
+    private final UtilisateurService utilisateurService;
+    private final RolesRepository rolesRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public EntrepriseServiceImpl(EntrepriseRepository entrepriseRepository) {
+    public EntrepriseServiceImpl(EntrepriseRepository entrepriseRepository, UtilisateurService utilisateurService, RolesRepository rolesRepository, PasswordEncoder passwordEncoder) {
         this.entrepriseRepository = entrepriseRepository;
+        this.utilisateurService = utilisateurService;
+        this.rolesRepository = rolesRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -37,9 +51,38 @@ public class EntrepriseServiceImpl implements EntrepriseService {
             throw new EntityNotValidException( "L'entreprise n'est pas valide" , ErrorCodes.ENTREPRISE_NOT_VALID , errors);
         }
 
-        Entreprise entrepriseSaved = entrepriseRepository.save(EntrepriseDto.toEntity(entrepriseDto));
-        return EntrepriseDto.fromEntity(entrepriseSaved);
+        EntrepriseDto savedEntreprise = EntrepriseDto.fromEntity(entrepriseRepository.save(EntrepriseDto.toEntity(entrepriseDto)));
 
+        UtilisateurDto utilisateurDto = fromEntreprise(savedEntreprise);
+
+        UtilisateurDto savedUtilisateur = utilisateurService.save(utilisateurDto);
+
+        RolesDto rolesDto = RolesDto.builder()
+                                    .roleName("ADMIN")
+                                    .utilisateur(savedUtilisateur)
+                                    .build();
+
+        rolesRepository.save(RolesDto.toEntity(rolesDto));
+
+        return savedEntreprise;
+
+    }
+
+    private UtilisateurDto fromEntreprise(EntrepriseDto entrepriseDto) {
+        return UtilisateurDto.builder()
+                .adresse(entrepriseDto.getAdresse())
+                .nom(entrepriseDto.getNom())
+                .prenom(entrepriseDto.getCodeFiscal())
+                .email(entrepriseDto.getEmail())
+                .motDePasse(passwordEncoder.encode(generateRandowPassword()))
+                .entreprise(entrepriseDto)
+                .dateDeNaissance(Instant.now())
+                .photo(entrepriseDto.getPhoto())
+                .build();
+    }
+
+    private String generateRandowPassword() {
+        return "som3R@nd0mP@$$word";
     }
 
     @Override

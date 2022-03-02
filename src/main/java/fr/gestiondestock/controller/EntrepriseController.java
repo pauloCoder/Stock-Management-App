@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 public class EntrepriseController implements EntrepriseApi {
 
-    private EntrepriseService entrepriseService;
+    private final EntrepriseService entrepriseService;
 
     @Autowired
     public EntrepriseController(EntrepriseService entrepriseService) {

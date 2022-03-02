@@ -39,7 +39,9 @@ public enum ErrorCodes {
     UTILISATEUR_NOT_VALID(12001),
 
     VENTES_NOT_FOUND(13000),
-    VENTES_NOT_VALID(13001);
+    VENTES_NOT_VALID(13001),
+
+    BAD_CREDENTIALS(14001);
 
     private Integer code;
 

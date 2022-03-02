@@ -55,6 +55,6 @@ public class Entreprise extends AbstractEntity
 	
 	// => Entreprise <-> Utilisateur
 	@OneToMany(mappedBy = "entreprise")
-	List<Utilisateur> utilisateurs;
+	private List<Utilisateur> utilisateurs;
 
 }

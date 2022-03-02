@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UtilisateurServiceImpl implements UtilisateurService {
 
-    private UtilisateurRepository utilisateurRepository;
+    private final UtilisateurRepository utilisateurRepository;
 
     @Autowired
     public UtilisateurServiceImpl(UtilisateurRepository utilisateurRepository) {
@@ -55,6 +55,24 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                 utilisateur.orElseThrow( () -> {
                     log.error("Inexistant utilisateur for id {}",id);
                     throw new EntityNotFoundException(String.format("Aucun utilisateur avec l'ID %s n'a ete trouve dans la BDD",id) ,ErrorCodes.UTILISATEUR_NOT_FOUND);
+                })
+        );
+
+    }
+
+    @Override
+    public UtilisateurDto findByEmail(String email) {
+
+        if (email == null) {
+            log.error("Utilisateur EMAIL is null");
+            return null;
+        }
+
+        Optional<Utilisateur> utilisateur = utilisateurRepository.findByEmail(email);
+        return UtilisateurDto.fromEntity(
+                utilisateur.orElseThrow( () -> {
+                    log.error("Inexistant utilisateur for email {}",email);
+                    throw new EntityNotFoundException(String.format("Aucun utilisateur avec l'EMAIL %s n'a ete trouve dans la BDD",email) ,ErrorCodes.UTILISATEUR_NOT_FOUND);
                 })
         );
 

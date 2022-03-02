@@ -37,6 +37,7 @@ public class RolesDto
 		Roles roles = new Roles();
 		roles.setId(rolesDto.getId());
 		roles.setRoleName(rolesDto.getRoleName());
+		roles.setUtilisateur(UtilisateurDto.toEntity(rolesDto.getUtilisateur()));
 
 		return roles;
 	}
