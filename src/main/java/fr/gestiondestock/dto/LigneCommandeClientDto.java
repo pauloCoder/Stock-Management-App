@@ -27,9 +27,6 @@ public class LigneCommandeClientDto
 	
 	// => LigneCommandeClient <-> Article
 	private ArticleDto article;
-	
-	// => LigneCommandeClient <-> CommandeClient
-	private CommandeClientDto commandeClient; //TODO : remove after
 
 	/***--------------------- Mapping ---------------------***/
 
@@ -45,7 +42,6 @@ public class LigneCommandeClientDto
 									 .prixUnitaire(ligneCommandeClient.getPrixUnitaire())
 									 .idEntreprise(ligneCommandeClient.getIdEntreprise())
 							 		 .article(ArticleDto.fromEntity(ligneCommandeClient.getArticle()))
-									 .commandeClient(CommandeClientDto.fromEntity(ligneCommandeClient.getCommandeClient()))
 									 .build();
 	}
 
@@ -61,7 +57,6 @@ public class LigneCommandeClientDto
 		ligneCommandeClient.setPrixUnitaire(ligneCommandeClient.getPrixUnitaire());
 		ligneCommandeClient.setIdEntreprise(ligneCommandeClientDto.getIdEntreprise());
 		ligneCommandeClient.setArticle(ArticleDto.toEntity(ligneCommandeClientDto.getArticle()));
-		ligneCommandeClient.setCommandeClient(CommandeClientDto.toEntity(ligneCommandeClientDto.getCommandeClient()));
 
 		return ligneCommandeClient;
 

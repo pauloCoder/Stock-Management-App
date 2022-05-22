@@ -32,10 +32,6 @@ public class LigneCommandeClientValidator {
             errors.addAll(ArticleValidator.validate(null));
         }
 
-        if (ligneCommandeClientDto.getCommandeClient() == null) {
-            errors.add("Veuillez saisir la commande liée à la ligne de la commande client");
-        }
-
         return errors;
 
     }
