@@ -3,6 +3,7 @@ package fr.gestiondestock.handlers;
 import fr.gestiondestock.exception.EntityNotFoundException;
 import fr.gestiondestock.exception.EntityNotValidException;
 import fr.gestiondestock.exception.ErrorCodes;
+import fr.gestiondestock.exception.InvalidOperationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -56,6 +57,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(errorDto , badRequest);
 
+    }
+
+    @ExceptionHandler(InvalidOperationException.class)
+    public ResponseEntity<ErrorDto> handleException(InvalidOperationException exception , WebRequest webRequest) {
+
+        final HttpStatus notValid = HttpStatus.BAD_REQUEST;
+        final ErrorDto errorDto = ErrorDto.builder()
+                .httpCode(notValid.value())
+                .errorCode(exception.getErrorCode())
+                .message(exception.getMessage())
+                .build();
+
+        return new ResponseEntity<>(errorDto , notValid);
     }
 
 }

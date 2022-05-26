@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.List;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.gestiondestock.model.CommandeClient;
 import fr.gestiondestock.model.CommandeFournisseur;
 import fr.gestiondestock.model.EtatCommande;
@@ -35,6 +36,7 @@ public class CommandeFournisseurDto
 	private FournisseurDto fournisseur;
 	
 	// => CommandeFournisseur <-> LigneCommandeFournisseur
+	@JsonIgnore
 	private List<LigneCommandeFournisseurDto> ligneCommandeFournisseurs;
 
 	/***--------------------- Mapping ---------------------***/

@@ -31,6 +31,7 @@ public class CommandeClientDto
 	/* Attribut(s) classe(s) */
 	
 	// => CommandeClient <-> LigneCommandeClient
+	@JsonIgnore
 	private List<LigneCommandeClientDto> ligneCommandeClients;
 	
 	// => CommandeClient <-> Client
@@ -70,5 +71,9 @@ public class CommandeClientDto
 
 		return commandeClient;
 
+	}
+
+	public boolean isCommandeLivree() {
+		return EtatCommande.LIVREE.equals(this.getEtatCommande());
 	}
 }

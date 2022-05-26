@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ArticleServiceImpl implements ArticleService {
 
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
     @Autowired
     public ArticleServiceImpl(ArticleRepository articleRepository) {
@@ -33,7 +33,6 @@ public class ArticleServiceImpl implements ArticleService {
 
         List<String> errors = ArticleValidator.validate(articleDto);
         if (!errors.isEmpty()) {
-
             log.error("Article is not valid {}",articleDto);
             throw new EntityNotValidException( "L'article n'est pas valide" , ErrorCodes.ARTICLE_NOT_VALID , errors);
         }
