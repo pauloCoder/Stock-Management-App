@@ -5,10 +5,7 @@ import fr.gestiondestock.dto.LigneCommandeFournisseurDto;
 import fr.gestiondestock.exception.EntityNotFoundException;
 import fr.gestiondestock.exception.EntityNotValidException;
 import fr.gestiondestock.exception.ErrorCodes;
-import fr.gestiondestock.model.Article;
-import fr.gestiondestock.model.CommandeFournisseur;
-import fr.gestiondestock.model.Fournisseur;
-import fr.gestiondestock.model.LigneCommandeFournisseur;
+import fr.gestiondestock.model.*;
 import fr.gestiondestock.repository.ArticleRepository;
 import fr.gestiondestock.repository.CommandeFournisseurRepository;
 import fr.gestiondestock.repository.FournisseurRepository;
@@ -19,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,10 +27,10 @@ import java.util.stream.Collectors;
 public class CommandeFournisseurServiceImpl implements CommandeFournisseurService {
 
 
-    private CommandeFournisseurRepository commandeFournisseurRepository;
-    private LigneCommandeFournisseurRepository ligneCommandeFournisseurRepository;
-    private FournisseurRepository fournisseurRepository;
-    private ArticleRepository articleRepository;
+    private final CommandeFournisseurRepository commandeFournisseurRepository;
+    private final LigneCommandeFournisseurRepository ligneCommandeFournisseurRepository;
+    private final FournisseurRepository fournisseurRepository;
+    private final ArticleRepository articleRepository;
 
     @Autowired
     public CommandeFournisseurServiceImpl(CommandeFournisseurRepository commandeFournisseurRepository, LigneCommandeFournisseurRepository ligneCommandeFournisseurRepository, FournisseurRepository fournisseurRepository, ArticleRepository articleRepository) {
@@ -148,5 +146,35 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
 
         commandeFournisseurRepository.deleteById(id);
 
+    }
+
+    @Override
+    public LigneCommandeFournisseurDto updateEtatCommande(Integer idCommande, EtatCommande etatCommande) {
+        return null;
+    }
+
+    @Override
+    public LigneCommandeFournisseurDto updateQuantiteCommandee(Integer idCommande, Integer idLigneCommande, BigDecimal quantite) {
+        return null;
+    }
+
+    @Override
+    public LigneCommandeFournisseurDto updateFournisseur(Integer idCommande, Integer idFournisseur) {
+        return null;
+    }
+
+    @Override
+    public LigneCommandeFournisseurDto updateArticle(Integer idCommande, Integer idLigneCommande, Integer newIdArticle) {
+        return null;
+    }
+
+    @Override
+    public LigneCommandeFournisseurDto deleteArticle(Integer idCommande, Integer idLigneCommande) {
+        return null;
+    }
+
+    @Override
+    public List<LigneCommandeFournisseurDto> findAllLignesCommandesClientByIdCommandeClient(Integer idCommande) {
+        return null;
     }
 }
