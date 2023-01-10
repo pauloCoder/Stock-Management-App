@@ -13,7 +13,6 @@ import fr.gestiondestock.repository.ArticleRepository;
 import fr.gestiondestock.repository.ClientRepository;
 import fr.gestiondestock.repository.CommandeClientRepository;
 import fr.gestiondestock.repository.LigneCommandeClientRepository;
-import fr.gestiondestock.services.ArticleService;
 import fr.gestiondestock.services.CommandeClientService;
 import fr.gestiondestock.validator.ArticleValidator;
 import fr.gestiondestock.validator.CommandeClientValidator;
@@ -52,11 +51,11 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         List<String> errors = CommandeClientValidator.validate(commandeClientDto);
         if (!errors.isEmpty()) {
             log.error("Commande client is not valid {}",commandeClientDto);
-            throw new EntityNotValidException("La commande client n'est pas valide" , ErrorCodes.COMMANDE_CLIENT_NOT_VALID , errors);
+            throw new EntityNotValidException("La commande client n'est pas valide", ErrorCodes.COMMANDE_CLIENT_NOT_VALID , errors);
         }
 
         if (commandeClientDto.getId() != null && commandeClientDto.isCommandeLivree()) {
-            throw new InvalidOperationException("Impossible de modifier la commande lorsqu'elle est livree",ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
+            throw new InvalidOperationException("Impossible de modifier la commande lorsqu'elle est livree", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
         }
 
         Optional<Client> client =  clientRepository.findById(commandeClientDto.getClient().getId());
@@ -83,7 +82,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
         if (!articleErrors.isEmpty()) {
             log.warn("Articles inexistant in DB");
-            throw new EntityNotValidException("Article n'existe pas dans la BDD",ErrorCodes.ARTICLE_NOT_FOUND,articleErrors);
+            throw new EntityNotValidException("Article n'existe pas dans la BDD", ErrorCodes.ARTICLE_NOT_FOUND, articleErrors);
         }
 
         CommandeClient savedCommandeClient = commandeClientRepository.save(CommandeClientDto.toEntity(commandeClientDto));

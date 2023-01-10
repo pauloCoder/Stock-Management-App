@@ -18,12 +18,12 @@ public interface CommandeFournisseurService {
     List<CommandeFournisseurDto> findAll();
 
     void deleteById(Integer id);
-    LigneCommandeFournisseurDto updateEtatCommande(Integer idCommande, EtatCommande etatCommande);
-    LigneCommandeFournisseurDto updateQuantiteCommandee(Integer idCommande, Integer idLigneCommande, BigDecimal quantite);
-    LigneCommandeFournisseurDto updateFournisseur(Integer idCommande, Integer idFournisseur);
-    LigneCommandeFournisseurDto updateArticle(Integer idCommande, Integer idLigneCommande, Integer newIdArticle);
+    CommandeFournisseurDto updateEtatCommande(Integer idCommande, EtatCommande etatCommande);
+    CommandeFournisseurDto updateQuantiteCommandee(Integer idCommande, Integer idLigneCommande, BigDecimal quantite);
+    CommandeFournisseurDto updateFournisseur(Integer idCommande, Integer idFournisseur);
+    CommandeFournisseurDto updateArticle(Integer idCommande, Integer idLigneCommande, Integer newIdArticle);
 
     //Delete article ==> delete LigneCommandeFournisseur
-    LigneCommandeFournisseurDto deleteArticle(Integer idCommande, Integer idLigneCommande);
-    List<LigneCommandeFournisseurDto> findAllLignesCommandesClientByIdCommandeClient(Integer idCommande);
+    CommandeFournisseurDto deleteArticle(Integer idCommande, Integer idLigneCommande);
+    List<LigneCommandeFournisseurDto> findAllLignesCommandesFournisseurByIdCommandeFournisseur(Integer idCommande);
 }

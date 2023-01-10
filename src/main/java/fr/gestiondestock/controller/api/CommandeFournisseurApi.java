@@ -1,6 +1,8 @@
 package fr.gestiondestock.controller.api;
 
 import fr.gestiondestock.dto.CommandeFournisseurDto;
+import fr.gestiondestock.dto.LigneCommandeFournisseurDto;
+import fr.gestiondestock.model.EtatCommande;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -9,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static fr.gestiondestock.utils.Constants.COMMANDE_FOURNISSEUR_ENDPOINT;
@@ -23,6 +26,54 @@ public interface CommandeFournisseurApi {
             @ApiResponse(code = 400 , message = "L'objet commande fournisseur n'est pas valide")
     })
     ResponseEntity<CommandeFournisseurDto> save(@RequestBody CommandeFournisseurDto commandeFournisseurDto);
+
+    @PatchMapping(value = COMMANDE_FOURNISSEUR_ENDPOINT + "/commandeFournisseurs/update/etat/{idCommande}/{etatCommande}" , consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Modification de l'état d'une commande fournisseur" , notes = "Cette methode permet de modifier l'état d'une commande fournisseur" , response = CommandeFournisseurDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "L'etat de la commande fournisseur a ete modifie"),
+            @ApiResponse(code = 400 , message = "L'etat de la commande fournisseur ne peut etre modifie")
+    })
+    ResponseEntity<CommandeFournisseurDto> updateEtatCommande(@PathVariable("idCommande") Integer idCommande, @PathVariable("etatCommande") EtatCommande etatCommande);
+
+    @PatchMapping(value = COMMANDE_FOURNISSEUR_ENDPOINT + "/commandeFournisseurs/update/qantite/{idCommande}/{idLigneCommande}/{quantite}" , consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Modification de la quantite d'une ligne de commande fournisseur" , notes = "Cette methode permet de modifier la quantite d'une ligne de commande fournisseur" , response = CommandeFournisseurDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La quantite de la ligne de commande a ete modifie"),
+            @ApiResponse(code = 400 , message = "La quantite de la ligne de commande ne peut etre modifiee")
+    })
+    ResponseEntity<CommandeFournisseurDto> updateQuantiteCommandee(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande, @PathVariable("quantite") BigDecimal quantite);
+
+    @PatchMapping(value = COMMANDE_FOURNISSEUR_ENDPOINT + "/commandeFournisseurs/update/fournisseur/{idCommande}/{idFournisseur}" , consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Modification du fournisseur proprietaire d'une commande" , notes = "Cette methode permet de modifier le fournisseur associé à la commande fournisseur" , response = CommandeFournisseurDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le fournisseur associé a la commande fournisseur a ete modifié"),
+            @ApiResponse(code = 400 , message = "Le fournisseur associé a la commande ne peut etre modifié")
+    })
+    ResponseEntity<CommandeFournisseurDto> updateFournisseur(@PathVariable("idCommande") Integer idCommande, @PathVariable("idFournisseur") Integer idFournisseur);
+
+    @PatchMapping(value = COMMANDE_FOURNISSEUR_ENDPOINT + "/commandeFournisseurs/update/article/{idCommande}/{idLigneCommande}/{idArticle}" , consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Modification d'un article de la commande" , notes = "Cette methode permet de modifier un article dans une commande" , response = CommandeFournisseurDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "L'article associé a la commande fournisseur a ete modifié"),
+            @ApiResponse(code = 400 , message = "L'article associé a la commande ne peut etre modifié")
+    })
+    ResponseEntity<CommandeFournisseurDto> updateArticle(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande, @PathVariable("idArticle") Integer idArticle);
+
+    @DeleteMapping(value = COMMANDE_FOURNISSEUR_ENDPOINT + "/commandeFournisseurs/delete/article/{idCommande}/{idLigneCommande}" , consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Suppression d'un article de la commande" , notes = "Cette methode permet de supprimer un article dans une commande" , response = CommandeFournisseurDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "L'article associé a la commande fournisseur a été supprimé"),
+            @ApiResponse(code = 400 , message = "L'article associé a la commande ne peut etre supprimé")
+    })
+    ResponseEntity<CommandeFournisseurDto> deleteArticle(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande);
+
+    @GetMapping(value = COMMANDE_FOURNISSEUR_ENDPOINT + "/commandeFournisseurs/find/lignesCommande/{idCommande}" , consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Recherche de toutes les lignes de commande d'une commande" , notes = "Cette methode permet de rechercher toutes les lignes de commande d'une commande avec un ID commande" , response = CommandeFournisseurDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste de lignes de commande a été trouvé en BDD"),
+            @ApiResponse(code = 400 , message = "Aucune ligne de commande fournisseur n'a été trouvé en BDD pour l'ID fourni")
+    })
+    ResponseEntity<List<LigneCommandeFournisseurDto>> findAllLignesCommandesFournisseurByIdCommandeFournisseur(@PathVariable("idCommande") Integer idCommande);
 
     @GetMapping(value = COMMANDE_FOURNISSEUR_ENDPOINT + "/{idCommandeFournisseur}" , produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher une commande fournisseur par son ID" , notes = "Cette methode permet de chercher une commande fournisseur par son ID" , response = CommandeFournisseurDto.class)
@@ -52,6 +103,6 @@ public interface CommandeFournisseurApi {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "La commande fournisseur a ete supprime"),
     })
-    ResponseEntity deleteById(@PathVariable("idCommandeFournisseur") Integer id);
+    ResponseEntity<Void> deleteById(@PathVariable("idCommandeFournisseur") Integer id);
 
 }

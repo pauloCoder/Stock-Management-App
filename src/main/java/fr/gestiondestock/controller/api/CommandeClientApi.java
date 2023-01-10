@@ -28,7 +28,7 @@ public interface CommandeClientApi {
     ResponseEntity<CommandeClientDto> save(@RequestBody CommandeClientDto commandeClientDto);
 
     @PatchMapping(value = COMMANDE_CLIENT_ENDPOINT + "/commandeClients/update/etat/{idCommande}/{etatCommande}" , consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Modification de l'état d'une commande client" , notes = "Cette methode permet de modifier l'état commande client" , response = CommandeClientDto.class)
+    @ApiOperation(value = "Modification de l'état d'une commande client" , notes = "Cette methode permet de modifier l'état d'une commande client" , response = CommandeClientDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "L'etat de la commande client a ete modifie"),
             @ApiResponse(code = 400 , message = "L'etat de la commande client ne peut etre modifie")
@@ -44,9 +44,9 @@ public interface CommandeClientApi {
     ResponseEntity<CommandeClientDto> updateQuantiteCommandee(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande, @PathVariable("quantite")BigDecimal quantite);
 
     @PatchMapping(value = COMMANDE_CLIENT_ENDPOINT + "/commandeClients/update/client/{idCommande}/{idClient}" , consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Modification du client proprietaire d'une commande" , notes = "Cette methode permet de modifier le client associé commande client" , response = CommandeClientDto.class)
+    @ApiOperation(value = "Modification du client proprietaire d'une commande" , notes = "Cette methode permet de modifier le client associé à une commande client" , response = CommandeClientDto.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Le client associé a la commande client ete modifié"),
+            @ApiResponse(code = 200, message = "Le client associé a la commande client a ete modifié"),
             @ApiResponse(code = 400 , message = "Le client associé a la commande ne peut etre modifié")
     })
     ResponseEntity<CommandeClientDto> updateClient(@PathVariable("idCommande") Integer idCommande, @PathVariable("idClient") Integer idClient);
