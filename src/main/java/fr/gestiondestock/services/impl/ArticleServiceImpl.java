@@ -1,11 +1,17 @@
 package fr.gestiondestock.services.impl;
 
 import fr.gestiondestock.dto.ArticleDto;
+import fr.gestiondestock.dto.LigneCommandeClientDto;
+import fr.gestiondestock.dto.LigneCommandeFournisseurDto;
+import fr.gestiondestock.dto.LigneVenteDto;
 import fr.gestiondestock.exception.EntityNotFoundException;
 import fr.gestiondestock.exception.EntityNotValidException;
 import fr.gestiondestock.exception.ErrorCodes;
 import fr.gestiondestock.model.Article;
 import fr.gestiondestock.repository.ArticleRepository;
+import fr.gestiondestock.repository.LigneCommandeClientRepository;
+import fr.gestiondestock.repository.LigneCommandeFournisseurRepository;
+import fr.gestiondestock.repository.LigneVenteRepository;
 import fr.gestiondestock.services.ArticleService;
 import fr.gestiondestock.validator.ArticleValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +28,16 @@ import java.util.stream.Collectors;
 public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepository articleRepository;
+    private final LigneVenteRepository ligneVenteRepository;
+    private final LigneCommandeClientRepository ligneCommandeClientRepository;
+    private final LigneCommandeFournisseurRepository ligneCommandeFournisseurRepository;
 
     @Autowired
-    public ArticleServiceImpl(ArticleRepository articleRepository) {
+    public ArticleServiceImpl(ArticleRepository articleRepository, LigneVenteRepository ligneVenteRepository, LigneCommandeClientRepository ligneCommandeClientRepository, LigneCommandeFournisseurRepository ligneCommandeFournisseurRepository) {
         this.articleRepository = articleRepository;
+        this.ligneVenteRepository = ligneVenteRepository;
+        this.ligneCommandeClientRepository = ligneCommandeClientRepository;
+        this.ligneCommandeFournisseurRepository = ligneCommandeFournisseurRepository;
     }
 
     @Override
@@ -74,6 +86,38 @@ public class ArticleServiceImpl implements ArticleService {
                     throw new EntityNotFoundException(String.format("Aucun article avec le CODE %s n'a été trouvé dans la BDD",codeArticle) ,ErrorCodes.ARTICLE_NOT_FOUND);
                 } )
         );
+    }
+
+    @Override
+    public List<LigneVenteDto> findHistoriqueVentes(Integer idArticle) {
+        return ligneVenteRepository.findAllByArticleId(idArticle)
+                .stream()
+                .map(LigneVenteDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LigneCommandeClientDto> findHistoriqueCommandeClient(Integer idArticle) {
+        return ligneCommandeClientRepository.findAllByArticleId(idArticle)
+                .stream()
+                .map(LigneCommandeClientDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LigneCommandeFournisseurDto> findHistoriqueCommandeFournisseur(Integer idArticle) {
+        return ligneCommandeFournisseurRepository.findAllByArticleId(idArticle)
+                .stream()
+                .map(LigneCommandeFournisseurDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ArticleDto> findAllArticleByIdCategory(Integer idCategory) {
+        return articleRepository.findAllByCategoryId(idCategory)
+                .stream()
+                .map(ArticleDto::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Override

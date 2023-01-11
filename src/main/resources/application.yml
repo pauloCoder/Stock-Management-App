@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://database-kl.cdewrnxau4mv.us-east-2.rds.amazonaws.com:3306/gestion_de_stock?createDatabaseIfNotExist=true&userSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://kmerlink-database.cuuvxtvptbqs.us-east-1.rds.amazonaws.com:3306/gestion_de_stock?createDatabaseIfNotExist=true&userSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: kmerlinkAdmin
-    password: kmerlinkdatabase$ql
+    password: kmerlinkdatabase18092022
     driver-class-name: com.mysql.cj.jdbc.Driver
   ## Specify DBMS
   jpa:

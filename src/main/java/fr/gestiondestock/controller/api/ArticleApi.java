@@ -1,6 +1,9 @@
 package fr.gestiondestock.controller.api;
 
 import fr.gestiondestock.dto.ArticleDto;
+import fr.gestiondestock.dto.LigneCommandeClientDto;
+import fr.gestiondestock.dto.LigneCommandeFournisseurDto;
+import fr.gestiondestock.dto.LigneVenteDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -40,6 +43,19 @@ public interface ArticleApi {
     })
     ResponseEntity<ArticleDto> findByCodeArticle(@PathVariable("codeArticle") String codeArticle);
 
+
+    @GetMapping(value = ARTICLE_ENDPOINT + "/historique/vente/{idArticle}" , produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<List<LigneVenteDto>> findHistoriqueVentes(@PathVariable("idArticle") Integer idArticle);
+
+    @GetMapping(value = ARTICLE_ENDPOINT + "/historique/commandeClient/{idArticle}" , produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<List<LigneCommandeClientDto>> findHistoriqueCommandeClient(@PathVariable("idArticle") Integer idArticle);
+
+    @GetMapping(value = ARTICLE_ENDPOINT + "/historique/commandeFournisseur/{idArticle}" , produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<List<LigneCommandeFournisseurDto>> findHistoriqueCommandeFournisseur( @PathVariable("idArticle") Integer idArticle);
+
+    @GetMapping(value = ARTICLE_ENDPOINT + "filter/category/{idCategory}" , produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<List<ArticleDto>> findAllArticleByIdCategory(@PathVariable("idCategory") Integer idCategory);
+
     @GetMapping(value = ARTICLE_ENDPOINT + "/all" , produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoie la liste des articles" , notes = "Cette methode permet de chercher et renvoyer la liste des articles qui existent dans la BDD" , responseContainer = "List<ArticleDto>")
     @ApiResponses(value = {
@@ -52,5 +68,5 @@ public interface ArticleApi {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "L'article a ete supprime"),
     })
-    ResponseEntity delete(@PathVariable("idArticle") Integer id);
+    ResponseEntity<Void> delete(@PathVariable("idArticle") Integer id);
 }
