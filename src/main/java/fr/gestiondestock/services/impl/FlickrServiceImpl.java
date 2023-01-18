@@ -7,7 +7,7 @@ import com.flickr4java.flickr.RequestContext;
 import com.flickr4java.flickr.auth.Auth;
 import com.flickr4java.flickr.auth.Permission;
 import com.flickr4java.flickr.uploader.UploadMetaData;
-import fr.gestiondestock.services.FlickService;
+import fr.gestiondestock.services.FlickrService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.io.InputStream;
 
 @Service
 @Slf4j
-public class FlickrServiceImpl implements FlickService {
+public class FlickrServiceImpl implements FlickrService {
 
     @Value("${flickr.apiKey}")
     private String apiKey;
@@ -39,7 +39,7 @@ public class FlickrServiceImpl implements FlickService {
         UploadMetaData uploadMetaData = new UploadMetaData();
         uploadMetaData.setTitle(title);
 
-        String photoId = flickr.getUploader().upload(photo,uploadMetaData);
+        String photoId = flickr.getUploader().upload(photo, uploadMetaData);
         return flickr.getPhotosInterface().getPhoto(photoId).getMedium640Url();
     }
 

@@ -43,7 +43,10 @@ public enum ErrorCodes {
     VENTES_NOT_FOUND(13000),
     VENTES_NOT_VALID(13001),
 
-    BAD_CREDENTIALS(14001);
+    // Liste des exceptions techniques
+    BAD_CREDENTIALS(14001),
+    UPDATE_PHOTO_EXCEPTION(14002),
+    UNKNOWN_CONTEXT(14003);
 
     private Integer code;
 
