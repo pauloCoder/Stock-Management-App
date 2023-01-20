@@ -1,9 +1,6 @@
 package fr.gestiondestock.services.impl;
 
-import fr.gestiondestock.dto.ArticleDto;
-import fr.gestiondestock.dto.ClientDto;
-import fr.gestiondestock.dto.CommandeClientDto;
-import fr.gestiondestock.dto.LigneCommandeClientDto;
+import fr.gestiondestock.dto.*;
 import fr.gestiondestock.exception.EntityNotFoundException;
 import fr.gestiondestock.exception.EntityNotValidException;
 import fr.gestiondestock.exception.ErrorCodes;
@@ -14,6 +11,7 @@ import fr.gestiondestock.repository.ClientRepository;
 import fr.gestiondestock.repository.CommandeClientRepository;
 import fr.gestiondestock.repository.LigneCommandeClientRepository;
 import fr.gestiondestock.services.CommandeClientService;
+import fr.gestiondestock.services.MvtStockService;
 import fr.gestiondestock.validator.ArticleValidator;
 import fr.gestiondestock.validator.CommandeClientValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,13 +35,15 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     private final LigneCommandeClientRepository ligneCommandeClientRepository;
     private final ClientRepository clientRepository;
     private final ArticleRepository articleRepository;
+    private final MvtStockService mvtStockService;
 
     @Autowired
-    public CommandeClientServiceImpl(CommandeClientRepository commandeClientRepository, LigneCommandeClientRepository ligneCommandeClientRepository, ClientRepository clientRepository, ArticleRepository articleRepository) {
+    public CommandeClientServiceImpl(CommandeClientRepository commandeClientRepository, LigneCommandeClientRepository ligneCommandeClientRepository, ClientRepository clientRepository, ArticleRepository articleRepository, MvtStockService mvtStockService) {
         this.commandeClientRepository = commandeClientRepository;
         this.ligneCommandeClientRepository = ligneCommandeClientRepository;
         this.clientRepository = clientRepository;
         this.articleRepository = articleRepository;
+        this.mvtStockService = mvtStockService;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
         List<String> errors = CommandeClientValidator.validate(commandeClientDto);
         if (!errors.isEmpty()) {
-            log.error("Commande client is not valid {}",commandeClientDto);
+            log.error("Commande client is not valid {}", commandeClientDto);
             throw new EntityNotValidException("La commande client n'est pas valide", ErrorCodes.COMMANDE_CLIENT_NOT_VALID , errors);
         }
 
@@ -60,8 +61,8 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
         Optional<Client> client =  clientRepository.findById(commandeClientDto.getClient().getId());
         if (client.isEmpty()) {
-            log.warn("Client with ID {} was not found in the DB",commandeClientDto.getClient().getId());
-            throw new EntityNotFoundException(String.format("Aucun client avec l'ID %s n'a ete trouve dans la BDD",commandeClientDto.getClient().getId()) ,ErrorCodes.CLIENT_NOT_FOUND);
+            log.warn("Client with ID {} was not found in the DB", commandeClientDto.getClient().getId());
+            throw new EntityNotFoundException(String.format("Aucun client avec l'ID %s n'a ete trouve dans la BDD", commandeClientDto.getClient().getId()) ,ErrorCodes.CLIENT_NOT_FOUND);
         }
 
         List<String> articleErrors = new ArrayList<>();
@@ -71,7 +72,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
                     Optional<Article> article = articleRepository.findById(ligneCommandeClientDto.getArticle().getId());
                     if (article.isEmpty()) {
                         log.warn("Article with ID {} was not found in the DB", ligneCommandeClientDto.getArticle().getId());
-                        articleErrors.add(String.format("L'article avec l'ID %s n'existe pas",ligneCommandeClientDto.getArticle().getId()));
+                        articleErrors.add(String.format("L'article avec l'ID %s n'existe pas", ligneCommandeClientDto.getArticle().getId()));
                     }
                 }
                 else {
@@ -110,8 +111,8 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         Optional<CommandeClient> commandeClient = commandeClientRepository.findById(id);
         return CommandeClientDto.fromEntity(
                 commandeClient.orElseThrow( () -> {
-                    log.error("Inexistant commandeClient for id {}",id);
-                    throw new EntityNotFoundException(String.format("Aucune commande client avec l'ID %s n'a ete trouvee dans la BDD",id) ,ErrorCodes.COMMANDE_CLIENT_NOT_FOUND);
+                    log.error("Inexistant commandeClient for id {}", id);
+                    throw new EntityNotFoundException(String.format("Aucune commande client avec l'ID %s n'a ete trouvee dans la BDD", id), ErrorCodes.COMMANDE_CLIENT_NOT_FOUND);
                 } )
         );
 
@@ -127,8 +128,8 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         Optional<CommandeClient> commandeClient = commandeClientRepository.findCommandeClientByCodeCommande(code);
         return CommandeClientDto.fromEntity(
                 commandeClient.orElseThrow( () -> {
-                    log.error("Inexistant commandeClient for code {}",code);
-                    throw new EntityNotFoundException(String.format("Aucune commande client avec le CODE %s n'a été trouvé dans la BDD",code) ,ErrorCodes.CATEGORY_NOT_FOUND);
+                    log.error("Inexistant commandeClient for code {}", code);
+                    throw new EntityNotFoundException(String.format("Aucune commande client avec le CODE %s n'a été trouvé dans la BDD", code) ,ErrorCodes.CATEGORY_NOT_FOUND);
                 } )
         );
     }
@@ -160,13 +161,16 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
         if (!StringUtils.hasLength(String.valueOf(etatCommande))) {
             log.error("Etat commande client is null");
-            throw new InvalidOperationException("Impossible de modifier l'etat de la commande avec un etat null",ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
+            throw new InvalidOperationException("Impossible de modifier l'etat de la commande avec un etat null", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
         }
 
         CommandeClientDto commandeClientDto = checkEtatCommande(idCommande);
 
         commandeClientDto.setEtatCommande(etatCommande);
         CommandeClient savedCommandeClient = commandeClientRepository.save(CommandeClientDto.toEntity(commandeClientDto));
+        if (commandeClientDto.isCommandeLivree()) {
+            updateMvtStock(idCommande);
+        }
         return CommandeClientDto.fromEntity(savedCommandeClient);
     }
 
@@ -290,5 +294,20 @@ public class CommandeClientServiceImpl implements CommandeClientService {
                     log.error("Inexistant commande client for id {}",idLigneCommande);
                     throw new EntityNotFoundException(String.format("Aucune commande client avec l'ID %s n'a ete trouvee dans la BDD",idLigneCommande) ,ErrorCodes.COMMANDE_CLIENT_NOT_FOUND);
                 });
+    }
+
+    private void updateMvtStock(Integer idCommande) {
+        List<LigneCommandeClient> ligneCommandeClients = ligneCommandeClientRepository.findAllByCommandeClientId(idCommande);
+        ligneCommandeClients.forEach(ligneCommandeClient -> {
+            MvtStockDto sortieStock = MvtStockDto.builder()
+                    .article(ArticleDto.fromEntity(ligneCommandeClient.getArticle()))
+                    .quantite(ligneCommandeClient.getQuantite())
+                    .idEntreprise(ligneCommandeClient.getIdEntreprise())
+                    .dateMvt(Instant.now())
+                    .typeMvt(TypeMvtStock.SORTIE)
+                    .sourceMvt(SourceMvtStock.COMMANDE_CLIENT)
+                    .build();
+            mvtStockService.sortieStockArticle(sortieStock);
+        });
     }
 }

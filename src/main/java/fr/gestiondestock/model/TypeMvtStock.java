@@ -1,7 +1,9 @@
 package fr.gestiondestock.model;
 
-public enum TypeMvtStock {
-
-    ENTREE, SORTIE, CORRECTION_POS, CORRECTION_NEG
-
+public enum TypeMvtStock
+{
+	ENTREE,
+	SORTIE,
+	CORRECTION_POSITIVE,
+	CORRECTION_NEGATIVE
 }

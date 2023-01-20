@@ -5,7 +5,7 @@ import java.time.Instant;
 
 import fr.gestiondestock.model.MvtStock;
 import fr.gestiondestock.model.SourceMvtStock;
-import fr.gestiondestock.model.TypeMtvStock;
+import fr.gestiondestock.model.TypeMvtStock;
 import lombok.Builder;
 import lombok.Data;
 
@@ -24,7 +24,7 @@ public class MvtStockDto
 	
 	private BigDecimal quantite;
 	
-	private TypeMtvStock typeMvt;
+	private TypeMvtStock typeMvt;
 
 	private SourceMvtStock sourceMvt;
 

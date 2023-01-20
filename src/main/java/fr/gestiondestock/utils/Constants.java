@@ -28,5 +28,6 @@ public interface Constants {
 
     String AUTHENTICATION_ENDPOINT = APP_ROOT + "/auth";
     String PHOTO_ENDPOINT = APP_ROOT + "/photos";
+    String MVTSTOCK_ENDPOINT = APP_ROOT + "/mvtstocks";
 
 }
