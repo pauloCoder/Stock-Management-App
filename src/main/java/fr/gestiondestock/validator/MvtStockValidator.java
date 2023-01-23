@@ -1,6 +1,7 @@
 package fr.gestiondestock.validator;
 
 import fr.gestiondestock.dto.MvtStockDto;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,11 +29,11 @@ public class MvtStockValidator {
             errors.add("Veuillez saisir la date du mouvement");
         }
 
-        if (mvtStockDto.getTypeMvt() == null) {
+        if (StringUtils.hasLength(mvtStockDto.getTypeMvt().name())) {
             errors.add("Veuillez saisir le type de mouvement");
         }
 
-        if (mvtStockDto.getArticle() == null) {
+        if (mvtStockDto.getArticle() == null || mvtStockDto.getArticle().getId() == null) {
             errors.add("Veuillez saisir l'article concernée par le mouvement");
         }
 
