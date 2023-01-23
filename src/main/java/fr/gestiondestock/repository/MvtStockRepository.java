@@ -11,7 +11,7 @@ import java.util.List;
 public interface MvtStockRepository extends JpaRepository<MvtStock, Integer> {
 
     @Query("SELECT SUM(m.quantite) FROM MvtStock m " +
-            "JOIN FETCH m.article a " +
+            "JOIN m.article a " +
             "WHERE a.id = :idArticle")
     BigDecimal stockReelArticle(@Param("idArticle") Integer idArticle);
 

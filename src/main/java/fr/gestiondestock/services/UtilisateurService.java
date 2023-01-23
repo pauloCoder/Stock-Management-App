@@ -1,5 +1,6 @@
 package fr.gestiondestock.services;
 
+import fr.gestiondestock.dto.ChangerMotDePasseUtilisateurDto;
 import fr.gestiondestock.dto.UtilisateurDto;
 
 import java.util.List;
@@ -15,5 +16,7 @@ public interface UtilisateurService {
     List<UtilisateurDto> findAll();
 
     void deleteById(Integer id);
+
+    UtilisateurDto changerMotDePasse(ChangerMotDePasseUtilisateurDto utilisateurDto);
 
 }

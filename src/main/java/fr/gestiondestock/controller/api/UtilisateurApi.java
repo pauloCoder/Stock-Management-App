@@ -1,5 +1,6 @@
 package fr.gestiondestock.controller.api;
 
+import fr.gestiondestock.dto.ChangerMotDePasseUtilisateurDto;
 import fr.gestiondestock.dto.UtilisateurDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,6 +45,16 @@ public interface UtilisateurApi {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "L'utilisateur a ete supprime"),
     })
-    ResponseEntity deleteById(@PathVariable("utilisateurId") Integer id);
+    ResponseEntity<Void> deleteById(@PathVariable("utilisateurId") Integer id);
+
+    @PostMapping(value = UTILISATEUR_ENDPOINT + "/change/password" , consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Modifier le mot de passe d'un utilisateur" , notes = "Cette methode permet de modifier le mot de passe d'un utilisateur" , response = UtilisateurDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "L'objet utilisateur cree / modifie"),
+            @ApiResponse(code = 400 , message = "L'objet utilisateur n'est pas valide")
+    })
+    ResponseEntity<UtilisateurDto> changerMotDePasse(@RequestBody ChangerMotDePasseUtilisateurDto changerMotDePasseUtilisateurDto);
+
+    // Ajouter la modification du mot de passe
 
 }

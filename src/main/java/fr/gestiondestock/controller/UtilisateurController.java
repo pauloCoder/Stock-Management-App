@@ -1,6 +1,7 @@
 package fr.gestiondestock.controller;
 
 import fr.gestiondestock.controller.api.UtilisateurApi;
+import fr.gestiondestock.dto.ChangerMotDePasseUtilisateurDto;
 import fr.gestiondestock.dto.UtilisateurDto;
 import fr.gestiondestock.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import java.util.List;
 @RestController
 public class UtilisateurController implements UtilisateurApi {
 
-    private UtilisateurService utilisateurService;
+    private final UtilisateurService utilisateurService;
 
     @Autowired
     public UtilisateurController(UtilisateurService utilisateurService) {
@@ -35,8 +36,13 @@ public class UtilisateurController implements UtilisateurApi {
     }
 
     @Override
-    public ResponseEntity deleteById(Integer id) {
-        deleteById(id);
+    public ResponseEntity<Void> deleteById(Integer id) {
+        utilisateurService.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<UtilisateurDto> changerMotDePasse(ChangerMotDePasseUtilisateurDto changerMotDePasseUtilisateurDto) {
+        return ResponseEntity.ok(utilisateurService.changerMotDePasse(changerMotDePasseUtilisateurDto));
     }
 }

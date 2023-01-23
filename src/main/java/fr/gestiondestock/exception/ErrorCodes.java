@@ -39,6 +39,7 @@ public enum ErrorCodes {
 
     UTILISATEUR_NOT_FOUND(12000),
     UTILISATEUR_NOT_VALID(12001),
+    UTILISATEUR_CHANGE_PASSWORD_OBJECT_NOT_VALID(12002),
 
     VENTES_NOT_FOUND(13000),
     VENTES_NOT_VALID(13001),
@@ -48,7 +49,7 @@ public enum ErrorCodes {
     UPDATE_PHOTO_EXCEPTION(14002),
     UNKNOWN_CONTEXT(14003);
 
-    private Integer code;
+    private final Integer code;
 
     ErrorCodes(Integer code) {
         this.code = code;
