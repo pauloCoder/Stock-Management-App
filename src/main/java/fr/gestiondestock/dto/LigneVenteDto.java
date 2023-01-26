@@ -1,11 +1,10 @@
 package fr.gestiondestock.dto;
 
-import java.math.BigDecimal;
-
-import fr.gestiondestock.model.Article;
 import fr.gestiondestock.model.LigneVente;
 import lombok.Builder;
 import lombok.Data;
+
+import java.math.BigDecimal;
 
 @Data
 @Builder
@@ -18,9 +17,7 @@ public class LigneVenteDto
 	/* Attribut(s) primitif(s) */
 	
 	private BigDecimal quantite;
-	
 	private BigDecimal prixUnitaire;
-
 	private Integer idEntreprise;
 
 	/* Attribut(s) classe(s) */

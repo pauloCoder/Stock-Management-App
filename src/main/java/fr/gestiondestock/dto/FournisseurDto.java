@@ -17,17 +17,11 @@ public class FournisseurDto
 	/* Attribut(s) primitif(s) */
 
 	private Integer id;
-	
 	private String nom;
-	
 	private String prenom;
-	
 	private String photo;
-	
 	private String email;
-	
 	private String telephone;
-
 	private Integer idEntreprise;
 	
 	/* Attribut(s) classe(s) */

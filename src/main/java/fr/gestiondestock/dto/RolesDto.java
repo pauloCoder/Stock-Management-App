@@ -15,7 +15,6 @@ public class RolesDto
 	/* Attribut(s) primitif(s) */
 
 	private Integer id;
-	
 	private String roleName;
 		
 	/* Attribut(s) classe(s) */

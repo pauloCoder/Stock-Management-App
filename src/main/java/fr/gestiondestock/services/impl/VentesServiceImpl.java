@@ -7,6 +7,7 @@ import fr.gestiondestock.dto.VentesDto;
 import fr.gestiondestock.exception.EntityNotFoundException;
 import fr.gestiondestock.exception.EntityNotValidException;
 import fr.gestiondestock.exception.ErrorCodes;
+import fr.gestiondestock.exception.InvalidOperationException;
 import fr.gestiondestock.model.*;
 import fr.gestiondestock.repository.ArticleRepository;
 import fr.gestiondestock.repository.LigneVenteRepository;
@@ -138,7 +139,10 @@ public class VentesServiceImpl implements VentesService {
             log.error("Ventes ID is null");
             return;
         }
-
+        List<LigneVente> ligneVentes = ligneVenteRepository.findAllByVentesId(id);
+        if (!ligneVentes.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer une vente contenant des lignes de vente", ErrorCodes.VENTES_ALREADY_IN_USE);
+        }
         ventesRepository.deleteById(id);
 
     }

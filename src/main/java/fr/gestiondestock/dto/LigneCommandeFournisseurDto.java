@@ -17,11 +17,8 @@ public class LigneCommandeFournisseurDto
 	/* Attribut(s) primitif(s) */
 
 	private Integer id;
-	
 	private BigDecimal quantite;
-	
 	private BigDecimal prixUnitaire;
-
 	private Integer idEntreprise;
 
 	/* Attribut(s) classe(s) */

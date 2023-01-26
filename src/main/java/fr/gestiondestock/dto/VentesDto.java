@@ -18,13 +18,9 @@ public class VentesDto
 	/* Attribut(s) primitif(s) */
 
 	private Integer id;
-
 	private String codeVente;
-	
 	private Instant dateVente;
-	
 	private String commentaire;
-
 	private Integer idEntreprise;
 
 	/* Attribut(s) classe(s) */

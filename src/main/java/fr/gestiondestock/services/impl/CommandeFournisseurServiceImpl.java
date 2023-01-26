@@ -111,8 +111,8 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
 
         return CommandeFournisseurDto.fromEntity(
                 commandeFournisseur.orElseThrow(()-> {
-                    log.error("Inexistant commande fournisseur for id {}",id);
-                    throw new EntityNotFoundException(String.format("Aucune commande fournisseur avec l'ID %s n'a pas ete trouvee en BDD",id),ErrorCodes.FOURNISSEUR_NOT_FOUND);
+                    log.error("Inexistant commande fournisseur for id {}" ,id);
+                    throw new EntityNotFoundException(String.format("Aucune commande fournisseur avec l'ID %s n'a pas ete trouvee en BDD", id), ErrorCodes.FOURNISSEUR_NOT_FOUND);
                 })
         );
 
@@ -150,7 +150,10 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
             log.error("Commande fournisseur ID is null");
             return;
         }
-
+        List<LigneCommandeFournisseur> ligneCommandeFournisseurs = ligneCommandeFournisseurRepository.findAllByCommandeFournisseurId(id);
+        if (!ligneCommandeFournisseurs.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer une commande fournisseur contenant des lignes de commande fournisseur", ErrorCodes.COMMANDE_FOURNISSEUR_ALREADY_IN_USE);
+        }
         commandeFournisseurRepository.deleteById(id);
 
     }

@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 public class FournisseurController implements FournisseurApi {
 
-    private FournisseurService fournisseurService;
+    private final FournisseurService fournisseurService;
 
     @Autowired
     public FournisseurController(FournisseurService fournisseurService) {
@@ -35,7 +35,7 @@ public class FournisseurController implements FournisseurApi {
     }
 
     @Override
-    public ResponseEntity deleteById(Integer id) {
+    public ResponseEntity<Void> deleteById(Integer id) {
         fournisseurService.deleteById(id);
         return ResponseEntity.ok().build();
     }

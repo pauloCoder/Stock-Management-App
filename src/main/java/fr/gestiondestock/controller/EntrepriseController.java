@@ -35,7 +35,7 @@ public class EntrepriseController implements EntrepriseApi {
     }
 
     @Override
-    public ResponseEntity deleteById(Integer id) {
+    public ResponseEntity<Void> deleteById(Integer id) {
         entrepriseService.deleteById(id);
         return ResponseEntity.ok().build();
     }

@@ -18,19 +18,12 @@ public class UtilisateurDto
 	/* Attribut(s) primitif(s) */
 	
 	private Integer id;
-
 	private String nom;
-	
-	private String prenom;	
-	
+	private String prenom;
 	private String photo;
-	
 	private Instant dateDeNaissance;
-	
 	private String email;
-	
 	private String telephone;
-	
 	private String motDePasse;
 	
 	/* Attribut(s) classe(s) */

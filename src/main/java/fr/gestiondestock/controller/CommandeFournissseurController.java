@@ -73,7 +73,7 @@ public class CommandeFournissseurController implements CommandeFournisseurApi {
     }
 
     @Override
-    public ResponseEntity deleteById(Integer id) {
+    public ResponseEntity<Void> deleteById(Integer id) {
         commandeFournisseurService.deleteById(id);
         return ResponseEntity.ok().build();
     }

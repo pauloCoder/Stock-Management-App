@@ -17,19 +17,12 @@ public class EntrepriseDto
 	/* Attribut(s) primitif(s) */
 
 	private Integer id;
-	
 	private String nom;
-	
 	private String codeFiscal;
-	
 	private String siteWeb;
-	
 	private String description;
-	
 	private String photo;
-	
 	private String email;
-	
 	private String telephone;
 	
 	/* Attribut(s) classe(s) */

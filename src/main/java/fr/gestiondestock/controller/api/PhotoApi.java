@@ -11,7 +11,10 @@ import static fr.gestiondestock.utils.Constants.PHOTO_ENDPOINT;
 @Api(value = PHOTO_ENDPOINT)
 public interface PhotoApi {
 
-    @PostMapping(value = PHOTO_ENDPOINT + "/{id}/{title}/{context}")
-    Object savePhoto(@PathVariable("context") String context, @PathVariable("id") Integer id, @RequestPart("file") MultipartFile photo, @PathVariable("title") String titre);
+    @PostMapping(value = PHOTO_ENDPOINT + "/save/{id}/{title}/{context}")
+    Object savePhoto(@PathVariable("context") String context,
+                     @PathVariable("id") Integer id,
+                     @RequestPart("file") MultipartFile photo,
+                     @PathVariable("title") String titre);
 
     }

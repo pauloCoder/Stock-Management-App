@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 public class CategoryController implements CategoryApi {
 
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @Autowired
     public CategoryController(CategoryService categoryService) {
@@ -40,7 +40,7 @@ public class CategoryController implements CategoryApi {
     }
 
     @Override
-    public ResponseEntity deleteById(Integer id) {
+    public ResponseEntity<Void> deleteById(Integer id) {
         categoryService.deleteById(id);
         return ResponseEntity.ok().build();
     }

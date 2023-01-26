@@ -54,14 +54,14 @@ public class ApplicationRequestFilter extends OncePerRequestFilter {
         if (StringUtils.hasLength(userEmail) && securityContext.getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
             if (Boolean.TRUE.equals(jwtUtil.validateToken(jwt , userDetails))) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails , null , userDetails.getAuthorities());
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null , userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 securityContext.setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
 
-        MDC.put("idEntreprise" , idEntreprise);
-        filterChain.doFilter(request,response);
+        MDC.put("idEntreprise", idEntreprise);
+        filterChain.doFilter(request, response);
 
     }
 

@@ -19,15 +19,10 @@ public class MvtStockDto
 	/* Attribut(s) primitif(s) */
 
 	private Integer id;
-	
 	private Instant dateMvt;
-	
 	private BigDecimal quantite;
-	
 	private TypeMvtStock typeMvt;
-
 	private SourceMvtStock sourceMvt;
-
 	private Integer idEntreprise;
 	
 	/* Attribut(s) classe(s) */

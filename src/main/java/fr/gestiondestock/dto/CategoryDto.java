@@ -16,11 +16,8 @@ public class CategoryDto {
 	/* Attribut(s) primitif(s) */
 
 	private Integer id;
-	
 	private String codeCategorie;
-	
 	private String designation;
-
 	private Integer idEntreprise;
 
 	/* Attribut(s) classe(s) */

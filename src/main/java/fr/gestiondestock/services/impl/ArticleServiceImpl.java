@@ -7,11 +7,12 @@ import fr.gestiondestock.dto.LigneVenteDto;
 import fr.gestiondestock.exception.EntityNotFoundException;
 import fr.gestiondestock.exception.EntityNotValidException;
 import fr.gestiondestock.exception.ErrorCodes;
+import fr.gestiondestock.exception.InvalidOperationException;
 import fr.gestiondestock.model.Article;
-import fr.gestiondestock.repository.ArticleRepository;
-import fr.gestiondestock.repository.LigneCommandeClientRepository;
-import fr.gestiondestock.repository.LigneCommandeFournisseurRepository;
-import fr.gestiondestock.repository.LigneVenteRepository;
+import fr.gestiondestock.model.LigneCommandeClient;
+import fr.gestiondestock.model.LigneCommandeFournisseur;
+import fr.gestiondestock.model.LigneVente;
+import fr.gestiondestock.repository.*;
 import fr.gestiondestock.services.ArticleService;
 import fr.gestiondestock.validator.ArticleValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -133,6 +134,19 @@ public class ArticleServiceImpl implements ArticleService {
         if (id == null) {
             log.error("Article ID is null");
             return;
+        }
+
+        List<LigneCommandeClient> ligneCommandeClients = ligneCommandeClientRepository.findAllByArticleId(id);
+        if (!ligneCommandeClients.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un article déjà utilisé dans des commandes clients", ErrorCodes.ARTICLE_ALREADY_IN_USE);
+        }
+        List<LigneCommandeFournisseur> ligneCommandeFournisseurs = ligneCommandeFournisseurRepository.findAllByArticleId(id);
+        if (!ligneCommandeFournisseurs.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un article déjà utilisé dans des commandes fournisseurs", ErrorCodes.ARTICLE_ALREADY_IN_USE);
+        }
+        List<LigneVente> ligneVentes = ligneVenteRepository.findAllByArticleId(id);
+        if (!ligneVentes.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un article déjà utilisé dans des ventes", ErrorCodes.ARTICLE_ALREADY_IN_USE);
         }
 
         articleRepository.deleteById(id);

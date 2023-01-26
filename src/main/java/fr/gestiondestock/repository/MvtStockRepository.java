@@ -16,4 +16,5 @@ public interface MvtStockRepository extends JpaRepository<MvtStock, Integer> {
     BigDecimal stockReelArticle(@Param("idArticle") Integer idArticle);
 
     List<MvtStock> findAllByArticleId(Integer idArticle);
+
 }

@@ -21,7 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final ApplicationRequestFilter applicationRequestFilter;
 
     @Autowired
-    public SecurityConfiguration(ApplicationUserDetailsService applicationUserDetailsService , ApplicationRequestFilter applicationRequestFilter) {
+    public SecurityConfiguration(ApplicationUserDetailsService applicationUserDetailsService, ApplicationRequestFilter applicationRequestFilter) {
         this.applicationUserDetailsService = applicationUserDetailsService;
         this.applicationRequestFilter = applicationRequestFilter;
     }
@@ -51,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(applicationRequestFilter , UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(applicationRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

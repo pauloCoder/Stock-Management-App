@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class VentesController implements VentesApi {
+public class
+VentesController implements VentesApi {
 
-    private VentesService ventesService;
+    private final VentesService ventesService;
 
     @Autowired
     public VentesController(VentesService ventesService) {
@@ -40,7 +41,7 @@ public class VentesController implements VentesApi {
     }
 
     @Override
-    public ResponseEntity deleteById(Integer id) {
+    public ResponseEntity<Void> deleteById(Integer id) {
         ventesService.deleteById(id);
         return ResponseEntity.ok().build();
     }

@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 public class ClientController implements ClientApi {
 
-    private ClientService clientService;
+    private final ClientService clientService;
 
     @Autowired
     public ClientController(ClientService clientService) {
@@ -35,7 +35,7 @@ public class ClientController implements ClientApi {
     }
 
     @Override
-    public ResponseEntity deleteById(Integer id) {
+    public ResponseEntity<Void> deleteById(Integer id) {
         clientService.deleteById(id);
         return ResponseEntity.ok().build();
     }

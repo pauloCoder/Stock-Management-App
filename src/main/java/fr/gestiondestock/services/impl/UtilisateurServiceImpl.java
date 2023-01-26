@@ -36,7 +36,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         List<String> errors = UtilisateurValidator.validate(changerMotDePasseUtilisateurDto);
         if (!errors.isEmpty()) {
             log.error("Utilisateur is not valid {}",changerMotDePasseUtilisateurDto);
-            throw new EntityNotValidException( "L'utilisateur' n'est pas valide" , ErrorCodes.UTILISATEUR_NOT_VALID , errors);
+            throw new EntityNotValidException( "L'utilisateur' n'est pas valide", ErrorCodes.UTILISATEUR_NOT_VALID , errors);
         }
 
         Utilisateur utilisateurSaved = utilisateurRepository.save(UtilisateurDto.toEntity(changerMotDePasseUtilisateurDto));
@@ -51,12 +51,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             log.error("Utilisateur ID is null");
             return null;
         }
-
         Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
         return UtilisateurDto.fromEntity(
                 utilisateur.orElseThrow( () -> {
-                    log.error("Inexistant utilisateur for id {}",id);
-                    throw new EntityNotFoundException(String.format("Aucun utilisateur avec l'ID %s n'a ete trouve dans la BDD",id) ,ErrorCodes.UTILISATEUR_NOT_FOUND);
+                    log.error("Inexistant utilisateur for id {}", id);
+                    throw new EntityNotFoundException(String.format("Aucun utilisateur avec l'ID %s n'a ete trouve dans la BDD",id), ErrorCodes.UTILISATEUR_NOT_FOUND);
                 })
         );
 
@@ -73,8 +72,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         Optional<Utilisateur> utilisateur = utilisateurRepository.findByEmail(email);
         return UtilisateurDto.fromEntity(
                 utilisateur.orElseThrow( () -> {
-                    log.error("Inexistant utilisateur for email {}",email);
-                    throw new EntityNotFoundException(String.format("Aucun utilisateur avec l'EMAIL %s n'a ete trouve dans la BDD",email) ,ErrorCodes.UTILISATEUR_NOT_FOUND);
+                    log.error("Inexistant utilisateur for email {}", email);
+                    throw new EntityNotFoundException(String.format("Aucun utilisateur avec l'EMAIL %s n'a ete trouve dans la BDD", email), ErrorCodes.UTILISATEUR_NOT_FOUND);
                 })
         );
 

@@ -1,15 +1,13 @@
 package fr.gestiondestock.dto;
 
-import java.time.Instant;
-import java.util.List;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fr.gestiondestock.model.CommandeClient;
 import fr.gestiondestock.model.CommandeFournisseur;
 import fr.gestiondestock.model.EtatCommande;
 import lombok.Builder;
 import lombok.Data;
+
+import java.time.Instant;
+import java.util.List;
 
 @Data
 @Builder
@@ -21,13 +19,9 @@ public class CommandeFournisseurDto
 	/* Attribut(s) primitif(s) */
 
 	private Integer id;
-	
 	private String codeCommande;
-	
 	private Instant dateCommande;
-
 	private EtatCommande etatCommande;
-
 	private Integer idEntreprise;
 
 	/* Attribut(s) classe(s) */

@@ -15,19 +15,12 @@ public class ArticleDto {
 	/* Attribut(s) primitif(s) */
 
 	private Integer id;
-	
 	private String codeArticle;
-	
 	private String designation;
-	
 	private BigDecimal prixUnitaireHt;
-	
 	private BigDecimal tauxTva;
-	
 	private BigDecimal prixUnitaireTtc;
-
 	private String photo;
-
 	private Integer idEntreprise;
 
 	/* Attribut(s) classe(s) */

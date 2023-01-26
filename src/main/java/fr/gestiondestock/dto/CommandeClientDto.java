@@ -19,13 +19,9 @@ public class CommandeClientDto
 	/* Attribut(s) primitif(s) */
 
 	private Integer id;
-	
 	private String codeCommande;
-	
 	private Instant dateCommande;
-
 	private EtatCommande etatCommande;
-
 	private Integer idEntreprise;
 
 	/* Attribut(s) classe(s) */

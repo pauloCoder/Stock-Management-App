@@ -1,16 +1,15 @@
 package fr.gestiondestock.services.impl;
 
 import fr.gestiondestock.dto.CategoryDto;
-import fr.gestiondestock.dto.CategoryDto;
 import fr.gestiondestock.exception.EntityNotFoundException;
 import fr.gestiondestock.exception.EntityNotValidException;
 import fr.gestiondestock.exception.ErrorCodes;
+import fr.gestiondestock.exception.InvalidOperationException;
+import fr.gestiondestock.model.Article;
 import fr.gestiondestock.model.Category;
-import fr.gestiondestock.model.Category;
-import fr.gestiondestock.repository.CategoryRepository;
+import fr.gestiondestock.repository.ArticleRepository;
 import fr.gestiondestock.repository.CategoryRepository;
 import fr.gestiondestock.services.CategoryService;
-import fr.gestiondestock.validator.ArticleValidator;
 import fr.gestiondestock.validator.CategoryValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +24,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CategoryServiceImpl implements CategoryService {
 
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
+    private final ArticleRepository articleRepository;
 
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, ArticleRepository articleRepository) {
         this.categoryRepository = categoryRepository;
+        this.articleRepository = articleRepository;
     }
 
     @Override
@@ -38,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<String> errors = CategoryValidator.validate(categoryDto);
         if (!errors.isEmpty()) {
             log.error("Category is not valid {}",categoryDto);
-            throw new EntityNotValidException( "La category n'est pas valide" , ErrorCodes.CATEGORY_NOT_VALID , errors);
+            throw new EntityNotValidException( "La category n'est pas valide", ErrorCodes.CATEGORY_NOT_VALID , errors);
         }
 
         Category savedCategory = categoryRepository.save(CategoryDto.toEntity(categoryDto));
@@ -58,7 +59,7 @@ public class CategoryServiceImpl implements CategoryService {
         return CategoryDto.fromEntity(
                 category.orElseThrow( () -> {
                     log.error("Inexistant category for id {}",id);
-                    throw new EntityNotFoundException(String.format("Aucune category avec l'ID %s n'a ete trouvee dans la BDD",id) ,ErrorCodes.CATEGORY_NOT_FOUND);
+                    throw new EntityNotFoundException(String.format("Aucune category avec l'ID %s n'a ete trouvee dans la BDD", id), ErrorCodes.CATEGORY_NOT_FOUND);
                 } )
         );
 
@@ -74,8 +75,8 @@ public class CategoryServiceImpl implements CategoryService {
         Optional<Category> category = categoryRepository.findCategoryByCodeCategorie(codeCategory);
         return CategoryDto.fromEntity(
                 category.orElseThrow( () -> {
-                    log.error("Inexistant category for code {}",codeCategory);
-                    throw new EntityNotFoundException(String.format("Aucune category avec le CODE %s n'a été trouvé dans la BDD",codeCategory) ,ErrorCodes.CATEGORY_NOT_FOUND);
+                    log.error("Inexistant category for code {}", codeCategory);
+                    throw new EntityNotFoundException(String.format("Aucune category avec le CODE %s n'a été trouvé dans la BDD", codeCategory) ,ErrorCodes.CATEGORY_NOT_FOUND);
                 } )
         );
     }
@@ -90,14 +91,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteById(Integer id) {
-
         if (id == null) {
             log.error("Category ID is null");
             return;
         }
-
+        List<Article> articles = articleRepository.findAllByCategoryId(id);
+        if (!articles.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer une catégorie contenant des articles", ErrorCodes.CATEGORY_ALREADY_IN_USE);
+        }
         categoryRepository.deleteById(id);
-
     }
 
 }

@@ -31,7 +31,7 @@ public class EntrepriseServiceImpl implements EntrepriseService {
     private final EntrepriseRepository entrepriseRepository;
     private final UtilisateurService utilisateurService;
     private final RolesRepository rolesRepository;
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public EntrepriseServiceImpl(EntrepriseRepository entrepriseRepository, UtilisateurService utilisateurService, RolesRepository rolesRepository, PasswordEncoder passwordEncoder) {
@@ -115,7 +115,6 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 
         if (id == null) {
             log.error("Entreprise ID is null");
-            return;
         }
     }
 }

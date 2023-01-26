@@ -27,9 +27,10 @@ public class FlickrConfiguration {
 
     @Bean
     public Flickr getFlickr() throws IOException, ExecutionException, InterruptedException, FlickrException {
-        Flickr flickr = new Flickr(apiKey,apiSecret,new REST());
+        Flickr flickr = new Flickr(apiKey, apiSecret, new REST());
 
-        OAuth10aService service = new ServiceBuilder(apiKey).apiSecret(apiSecret).build(FlickrApi.instance(FlickrApi.FlickrPerm.DELETE));
+        OAuth10aService service = new ServiceBuilder(apiKey).apiSecret(apiSecret)
+                .build(FlickrApi.instance(FlickrApi.FlickrPerm.DELETE));
         final Scanner scanner = new Scanner(System.in);
         final OAuth1RequestToken request = service.getRequestToken();
         final String authUrl = service.getAuthorizationUrl(request);

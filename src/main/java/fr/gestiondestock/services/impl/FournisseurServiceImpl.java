@@ -1,16 +1,15 @@
 package fr.gestiondestock.services.impl;
 
 import fr.gestiondestock.dto.FournisseurDto;
-import fr.gestiondestock.dto.FournisseurDto;
 import fr.gestiondestock.exception.EntityNotFoundException;
 import fr.gestiondestock.exception.EntityNotValidException;
 import fr.gestiondestock.exception.ErrorCodes;
-import fr.gestiondestock.model.Client;
+import fr.gestiondestock.exception.InvalidOperationException;
+import fr.gestiondestock.model.CommandeFournisseur;
 import fr.gestiondestock.model.Fournisseur;
-import fr.gestiondestock.repository.ClientRepository;
+import fr.gestiondestock.repository.CommandeFournisseurRepository;
 import fr.gestiondestock.repository.FournisseurRepository;
 import fr.gestiondestock.services.FournisseurService;
-import fr.gestiondestock.validator.ClientValidator;
 import fr.gestiondestock.validator.FournisseurValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +22,15 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class FournisseurServiceImpl implements FournisseurService {
+    private final CommandeFournisseurRepository commandeFournisseurRepository;
 
-    private FournisseurRepository fournisseurRepository;
+    private final FournisseurRepository fournisseurRepository;
 
     @Autowired
-    public FournisseurServiceImpl(FournisseurRepository fournisseurRepository) {
+    public FournisseurServiceImpl(FournisseurRepository fournisseurRepository,
+                                  CommandeFournisseurRepository commandeFournisseurRepository) {
         this.fournisseurRepository = fournisseurRepository;
+        this.commandeFournisseurRepository = commandeFournisseurRepository;
     }
 
     @Override
@@ -73,12 +75,14 @@ public class FournisseurServiceImpl implements FournisseurService {
 
     @Override
     public void deleteById(Integer id) {
-
         if (id == null) {
             log.error("Fournisseur ID is null");
             return;
         }
-
+        List<CommandeFournisseur> commandeFournisseurs = commandeFournisseurRepository.findAllByFournisseurId(id);
+        if (!commandeFournisseurs.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un fournisseur avec des commande fournisseur", ErrorCodes.FOURNISSEUR_ALREADY_IN_USE);
+        }
         fournisseurRepository.deleteById(id);
 
     }

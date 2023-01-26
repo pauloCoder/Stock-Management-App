@@ -21,7 +21,8 @@ import static fr.gestiondestock.utils.Constants.AUTHORIZATION;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfiguration {
+public class
+SwaggerConfiguration {
 
     @Bean
     public Docket api() {
@@ -42,7 +43,7 @@ public class SwaggerConfiguration {
     }
 
     private ApiKey apiKey() {
-        return new ApiKey("JWT" , AUTHORIZATION , "header");
+        return new ApiKey("JWT", AUTHORIZATION, "header");
     }
 
     private SecurityContext securityContext() {
@@ -52,10 +53,10 @@ public class SwaggerConfiguration {
     }
 
     List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global" , "accessEverything");
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Collections.singletonList(new SecurityReference("JWT" , authorizationScopes));
+        return Collections.singletonList(new SecurityReference("JWT", authorizationScopes));
     }
 
 }
